@@ -16,6 +16,12 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
 
     };
 
+    $public.void.flush = function() {
+
+        $self.html = "";
+
+    };
+
     $private.void.load = function() {
 
         $self.html += "<html>\n";

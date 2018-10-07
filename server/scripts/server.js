@@ -16,6 +16,13 @@ $js.compile("$server", null, function($public, $private, $protected, $self) {
 
                 });
 
+            } else if (_request.url == "/Flush") {
+
+                $compiler.flush();
+
+                _response.write("Cache removed.");
+                _response.end();
+
             } else {
 
                 _response.write("OK");
