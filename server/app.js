@@ -39,6 +39,7 @@ function init_libs() {
 function load_agents() {
 
     $load("./scripts/api.js");
+    $load("./scripts/compiler.js");
     $load("./scripts/server.js");
 
 }
@@ -46,6 +47,7 @@ function load_agents() {
 function init_agents() {
 
     $global.$api = new $api();
+    $global.$compiler = new $compiler();
     $global.$server = new $server();
 
 }
