@@ -61,6 +61,22 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
         $self.index = -1;
         $self.on_recurse_end = function() {
 
+            $css.select($self.selector)
+                .begin()
+                    .absolute()
+                    .sideFull()
+                    .mask()
+                .save()
+                .state("initial")
+                    .opacity(1)
+                .save()
+                .state("show")
+                    .opacity(1)
+                .save()
+                .state("hide")
+                    .opacity(0)
+                .save();
+
             $self.on_style($self.views);
 
             $self.element.className = "d-none d-initial";
@@ -71,6 +87,12 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
 
         };
         $self.recurse();
+
+    };
+
+    $public.void.show = function() {
+
+        $self.element.className = "d-disp d-show";
 
     };
 

@@ -51,11 +51,13 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
 
         $self.html += "\n\n            const $global = $window;\n";
 
-        $self.queue.push("../site/js/services/js.js");
+        $self.queue.push("../js.js");
+        $self.queue.push("../site/js/services/css.js");
         $self.queue.push("../site/js/services/view.js");
         $self.queue.push("../site/js/abstract/Module.js");
         $self.queue.push("../site/js/abstract/Page.js");
         $self.queue.push("../site/js/abstract/View.js");
+        $self.queue.push("../site/js/init.js");
 
         $self.index = -1;
         $self.on_recurse_end = function() {

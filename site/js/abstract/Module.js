@@ -4,11 +4,11 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
     $public.field.container = null;
     $public.field.css = null;
 
-    $private.field.views = {};
-    $private.field.pages = {};
+    $public.field.views = {};
+    $public.field.pages = {};
 
-    $private.field.tag = "";
-    $private.field.selector = "";
+    $public.field.tag = "";
+    $public.field.selector = "";
 
     $private.field.container_generated = false;
 
@@ -123,6 +123,13 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
         $self.index = -1;
         $self.on_recurse_end = function() {
+
+            $css.select($self.selector)
+                .begin()
+                    .absolute()
+                    .sideFull()
+                    .mask()
+                .save();
 
             $css.target = $self.tag;
 
