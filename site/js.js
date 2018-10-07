@@ -230,4 +230,4 @@ $global.$js = function() {
 
     };
 
-}
+};

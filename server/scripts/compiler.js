@@ -33,9 +33,11 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
 
     $private.void.load_script = function() {
 
-        $self.script = "\n            const $global = $window;\n";
+        $self.script = "\n\n            const $global = $window;\n";
 
         $private.field.queue.push("../site/js.js");
+        $private.field.queue.push("../site/services/view.js");
+        $private.field.queue.push("../site/abstract/View.js");
 
         $self.index = -1;
         $self.on_recurse_end = function() {
@@ -72,6 +74,7 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
             $fs.readFile(path, function(_error, _data) {
             
                 _data.toString().split("\n").forEach(function(_line) { $self.script += "\n            " + _line; });
+                $self.script += "\n";
                 
                 $self.recurse();
     
