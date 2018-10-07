@@ -24,8 +24,6 @@ function globalize() {
 function load_init_js() {
     
     $load("../js.js");
-    
-    $global.$js = new $js();
 
 }
 

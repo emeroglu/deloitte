@@ -30,11 +30,11 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
         
         $fs.readFile("../site/css/main.css", function(_error, _data) {
 
-            $self.html += "         <style type='text/css'>\n";
+            $self.html += "         <style type='text/css'>";
 
             _data.toString().split("\n").forEach(function(_line) { $self.html += "\n            " + _line; });
             
-            $self.html += "\n\n         </style>\n";
+            $self.html += "\n         </style>\n";
 
             $self.html += "   </head>\n";
             $self.html += "   <body>\n";
@@ -49,7 +49,7 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
 
     $private.void.load_script = function() {
 
-        $self.html += "\n\n            const $global = $window;\n";
+        $self.html += "\n            let $global = window;\n";
 
         $self.queue.push("../js.js");
         $self.queue.push("../site/js/services/css.js");
@@ -57,12 +57,14 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
         $self.queue.push("../site/js/abstract/Module.js");
         $self.queue.push("../site/js/abstract/Page.js");
         $self.queue.push("../site/js/abstract/View.js");
+        $self.queue.push("../site/js/modules/main.js");
+        $self.queue.push("../site/js/pages/index.js");
         $self.queue.push("../site/js/init.js");
 
         $self.index = -1;
         $self.on_recurse_end = function() {
 
-            $self.html += "\n       </script>\n"
+            $self.html += "       </script>\n"
     
             $self.html += "   </body>\n";
             $self.html += "</html>";

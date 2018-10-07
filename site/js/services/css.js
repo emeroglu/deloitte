@@ -1,8 +1,8 @@
-$js.compile("$css", [], function($self) {
+$js.compile("$css", null, function($public, $private, $protected, $self) {
 
     $public.field.target = "";
 
-    $public.delegate.func.select = function(_selector) {
+    $public.func.select = function(_selector) {
 
         return {
             selector: _selector,

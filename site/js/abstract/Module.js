@@ -7,15 +7,16 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
     $public.field.views = {};
     $public.field.pages = {};
 
+    $public.field.key = "";
     $public.field.tag = "";
     $public.field.selector = "";
 
     $private.field.container_generated = false;
 
-    $public.delegate.func.begin = function() { $self.parent = null; return $self; };
+    $public.delegate.begin = function() { $self.parent = null; return $self; };
 
     $private.void.on_load = function() {};
-    $public.delegate.func.onLoad = function($on_load) { $self.on_load = $on_load; return $self; };
+    $public.delegate.onLoad = function($on_load) { $self.on_load = $on_load; return $self; };
 
     $protected.virtual.func.on_key = function() { return ""; };
 
@@ -26,8 +27,8 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
     $private.void.dynamic_css = function() {
 
         $self.css = document.createElement("style");
-        e.setAttribute("id", $self.tag);
-        e.setAttribute("type", "text/css");
+        $self.css.setAttribute("id", $self.tag);
+        $self.css.setAttribute("type", "text/css");
         document.head.appendChild($self.css);
 
     };
@@ -36,11 +37,11 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
     $private.void.merge = function() {
 
         for (let key in $self.views) {
-            $self.merged({ id: $self.views[key].id, obj: $self.views[key], type: "view" });
+            $self.merged.push({ id: $self.views[key].id, obj: $self.views[key], type: "view" });
         }
 
         for (let key in $self.pages) {
-            $self.merged({ id: $self.pages[key].id, obj: $self.pages[key], type: "page" });
+            $self.merged.push({ id: $self.pages[key].id, obj: $self.pages[key], type: "page" });
         }
 
         $self.merged.sort(function(a, b) { if (a.id < b.id) return -1; else return 1; });
@@ -57,7 +58,9 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
             
             $self.merge();
 
-        } else if ($self.index == $self.merged.length) {
+        }
+        
+        if ($self.index == $self.merged.length) {
             
             $self.on_recurse_end();
 
@@ -87,7 +90,7 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
             let page = item.obj;
 
-            if (page.is_initial) {
+            if (page.is_initial()) {
 
                 $self.initial_page = page;
 
@@ -109,6 +112,7 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
     $public.void.load = function() {
 
+        $self.key = $self.on_key();
         $self.tag = "d-" + $self.key + "-module";
 
         $self.selector = $self.tag;

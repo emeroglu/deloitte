@@ -17,10 +17,13 @@ $global.$js = function() {
 
     this.generate = function(instance) {
 
+        $js.id++;
+
         instance.__public__ = { __virtuals__: {}, __extensions__: {} };
         instance.__private__ = {};
         instance.__protected__ = { __virtuals__: {}, __extensions__: {} };
         instance.__self__ = {};
+        instance.__self__.__id__ = $js.id;
 
         instance.__public_schema__ = { field: {}, func: {}, void: {}, delegate: {}, virtual: { func: {}, void: {} }, override: { func: {}, void: {} }, extension: { func: {}, void: {} } };
         instance.__private_schema__ = { field: {}, func: {}, void: {} };
@@ -40,9 +43,6 @@ $global.$js = function() {
 
         $js.build(instance);
         
-        this.id++;
-        instance.__self__.__id__ = this.id;
-        
         for (let key in instance.__public__) {
             if (key != "__virtuals__" && key != "__extensions__")
                 instance[key] = instance.__public__[key];
@@ -51,6 +51,10 @@ $global.$js = function() {
         if ($js.schemas[instance.__schema__].proto == null) {
 
             delete instance.__key__;
+
+            delete instance.__public_schema__;
+            delete instance.__private_schema__;
+            delete instance.__protected_schema__;
 
             if (instance.on_build != null) { 
                 instance.on_build(); 
@@ -61,6 +65,10 @@ $global.$js = function() {
         if (proto != null && proto.name == $js.schemas[instance.__schema__].proto.name) {
             
             delete instance.__key__;
+
+            delete instance.__public_schema__;
+            delete instance.__private_schema__;
+            delete instance.__protected_schema__;
 
             if (instance.on_build != null) { 
                 instance.on_build(); 
@@ -230,4 +238,5 @@ $global.$js = function() {
 
     };
 
-}
+};
+$global.$js = new $js();
