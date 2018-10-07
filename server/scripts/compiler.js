@@ -1,7 +1,6 @@
 $js.compile("$compiler", null, function($public, $private, $protected, $self) {
 
     $private.field.html = "";
-    $private.field.script = "";
 
     $private.void.on_load = function() {};
 
@@ -28,27 +27,39 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
         $self.html += "   <head>\n";
         $self.html += "       <meta charset='UTF-8' />\n";
         $self.html += "       <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, users-scalable=0'>\n";
-        $self.html += "   </head>\n";
-        $self.html += "   <body>\n";
         
-        $self.html += "       <script type='text/javascript'>"
+        $fs.readFile("../site/css/main.css", function(_error, _data) {
 
-        $self.load_script();
+            $self.html += "         <style type='text/css'>\n";
+
+            _data.toString().split("\n").forEach(function(_line) { $self.html += "\n            " + _line; });
+            
+            $self.html += "\n\n         </style>\n";
+
+            $self.html += "   </head>\n";
+            $self.html += "   <body>\n";
+            
+            $self.html += "       <script type='text/javascript'>"
+    
+            $self.load_script();
+
+        });
 
     };
 
     $private.void.load_script = function() {
 
-        $self.script = "\n\n            const $global = $window;\n";
+        $self.html += "\n\n            const $global = $window;\n";
 
-        $private.field.queue.push("../site/js.js");
-        $private.field.queue.push("../site/services/view.js");
-        $private.field.queue.push("../site/abstract/View.js");
+        $self.queue.push("../site/js/services/js.js");
+        $self.queue.push("../site/js/services/view.js");
+        $self.queue.push("../site/js/abstract/Module.js");
+        $self.queue.push("../site/js/abstract/Page.js");
+        $self.queue.push("../site/js/abstract/View.js");
 
         $self.index = -1;
         $self.on_recurse_end = function() {
 
-            $self.html += $self.script;
             $self.html += "\n       </script>\n"
     
             $self.html += "   </body>\n";
@@ -79,8 +90,8 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
 
             $fs.readFile(path, function(_error, _data) {
             
-                _data.toString().split("\n").forEach(function(_line) { $self.script += "\n            " + _line; });
-                $self.script += "\n";
+                _data.toString().split("\n").forEach(function(_line) { $self.html += "\n            " + _line; });
+                $self.html += "\n";
                 
                 $self.recurse();
     
