@@ -15,13 +15,13 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
     $public.delegate.func.begin = function() { $self.parent = null; return $self; };
 
     $private.field.parent = null;
-    $public.delegate.setParent = function(_parent) { $self.parent = _parent; return $self; };
+    $public.delegate.func.setParent = function(_parent) { $self.parent = _parent; return $self; };
 
     $private.void.on_load = function() {};
-    $public.delegate.onLoad = function($on_load) { $self.on_load = $on_load; return $self; };
+    $public.delegate.func.onLoad = function($on_load) { $self.on_load = $on_load; return $self; };
 
     $private.void.on_click = function() {};
-    $public.delegate.onClick = function($on_click) { $self.on_click = $on_click; return $self; };
+    $public.delegate.func.onClick = function($on_click) { $self.on_click = $on_click; return $self; };
 
     $protected.virtual.func.on_tag = function() { return "d-view"; };
 
