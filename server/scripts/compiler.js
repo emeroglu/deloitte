@@ -49,16 +49,20 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
 
     $private.void.load_script = function() {
 
-        $self.html += "\n            let $global = window;\n";
+        $self.html += "\n\n";
+        $self.html += "            let $window = window;\n";
+        $self.html += "            let $global = $window;\n";
 
         $self.queue.push("../js.js");
+        $self.queue.push("../site/js/services/bcast.js");
         $self.queue.push("../site/js/services/css.js");
         $self.queue.push("../site/js/services/view.js");
         $self.queue.push("../site/js/abstract/Module.js");
         $self.queue.push("../site/js/abstract/Page.js");
         $self.queue.push("../site/js/abstract/View.js");
-        $self.queue.push("../site/js/modules/main.js");
-        $self.queue.push("../site/js/pages/index.js");
+        $self.queue.push("../site/js/modules/Main.js");
+        $self.queue.push("../site/js/pages/Index.js");
+        $self.queue.push("../site/js/views/DummyView.js");
         $self.queue.push("../site/js/init.js");
 
         $self.index = -1;

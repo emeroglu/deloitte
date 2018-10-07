@@ -1,15 +1,20 @@
 $js.compile("Module", null, function($public, $private, $protected, $self) {
 
-    $public.field.element = null;
-    $public.field.container = null;
-    $public.field.css = null;
+    $private.field.element = null;
+    $private.field.container = null;
+    $private.field.css = null;
 
-    $public.field.views = {};
-    $public.field.pages = {};
+    $protected.field.views = {};
+    $protected.field.pages = {};
 
-    $public.field.key = "";
-    $public.field.tag = "";
-    $public.field.selector = "";
+    $private.field.key = "";
+    $private.field.selector = "";
+
+    $private.field.tag = "";
+    $public.func.get_tag = function() { return $self.tag; };
+
+    $private.field.loaded = false;
+    $public.func.is_loaded = function() { return $self.loaded; };
 
     $private.field.container_generated = false;
 
@@ -24,10 +29,10 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
     $protected.virtual.void.on_style = function(_pages, _views) { };
     $protected.virtual.void.on_ready = function(_pages, _views, $ready) { $ready(); };
 
-    $private.void.dynamic_css = function() {
+    $private.void.dynamic_css = function(_id) {
 
         $self.css = document.createElement("style");
-        $self.css.setAttribute("id", $self.tag);
+        $self.css.setAttribute("id", _id);
         $self.css.setAttribute("type", "text/css");
         document.head.appendChild($self.css);
 
@@ -110,7 +115,26 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
     };
 
+    $private.void.listen_viewport = function() {
+
+        $bcast.listen("viewport_new", function() {
+
+            $self.dynamic_css($self.tag + "-" + $view.port);
+
+            new DummyView()
+                .begin()
+                    .setParent($self)
+                .sneaky_load();
+
+        });
+
+    };
+
     $public.void.load = function() {
+
+        $view.module = $self;
+
+        $self.listen_viewport();
 
         $self.key = $self.on_key();
         $self.tag = "d-" + $self.key + "-module";
@@ -122,31 +146,38 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
         $self.on_construct($self.pages, $self.views);
 
-        $self.dynamic_css();
+        $self.dynamic_css($self.tag);
         $css.target = $self.tag;
-
-        $self.index = -1;
-        $self.on_recurse_end = function() {
-
-            $css.select($self.selector)
+        $css.select($self.selector)
                 .begin()
                     .absolute()
                     .sideFull()
                     .mask()
                 .save();
 
-            $css.target = $self.tag;
+        new DummyView()
+            .begin()
+                .setParent($self)
+                .onLoad(function() {
 
-            $self.on_style($self.pages, $self.views);
+                    $self.index = -1;
+                    $self.on_recurse_end = function() {
+            
+                        $self.on_style($self.pages, $self.views);
+            
+                        $self.initial_page.show(function() {
+            
+                            $self.loaded = true;
 
-            $self.initial_page.show(function() {
+                            $self.on_ready($self.pages, $self.views, $self.on_load);
+            
+                        });
+            
+                    };
+                    $self.recurse();
 
-                $self.on_ready($self.pages, $self.views, $self.on_load);
-
-            });
-
-        };
-        $self.recurse();
+                })
+            .sneaky_load();
 
     };
 

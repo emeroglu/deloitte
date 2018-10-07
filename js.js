@@ -209,8 +209,8 @@ $global.$js = function() {
 
             instance.__protected__.__extensions__[key].push(instance.__protected_schema__.extension.func[key]);
             
-            eval("instance.__protected__['" + key + "'] = function() { instance.__protected__.__virtuals__['" + key + "'](); for (var index in instance.__protected__.__extensions__['" + key + "']) instance.__protected__.__extensions__['" + key + "'][index](); }");
-            eval("instance.__self__['" + key + "'] = function() { instance.__protected__.__virtuals__['" + key + "'](); for (var index in instance.__protected__.__extensions__['" + key + "']) instance.__protected__.__extensions__['" + key + "'][index](); }");
+            eval("instance.__protected__['" + key + "'] = function() { instance.__protected__.__virtuals__['" + key + "'](arguments[0]); for (var index in instance.__protected__.__extensions__['" + key + "']) instance.__protected__.__extensions__['" + key + "'][index](arguments[0]); }");
+            eval("instance.__self__['" + key + "'] = function() { instance.__protected__.__virtuals__['" + key + "'](arguments[0]); for (var index in instance.__protected__.__extensions__['" + key + "']) instance.__protected__.__extensions__['" + key + "'][index](arguments[0]; }");
 
         }
 
@@ -221,8 +221,8 @@ $global.$js = function() {
 
             instance.__protected__.__extensions__[key].push(instance.__protected_schema__.extension.void[key]);
             
-            eval("instance.__protected__['" + key + "'] = function() { instance.__protected__.__virtuals__['" + key + "'](); for (var index in instance.__protected__.__extensions__['" + key + "']) instance.__protected__.__extensions__['" + key + "'][index](); }");
-            eval("instance.__self__['" + key + "'] = function() { instance.__protected__.__virtuals__['" + key + "'](); for (var index in instance.__protected__.__extensions__['" + key + "']) instance.__protected__.__extensions__['" + key + "'][index](); }");
+            eval("instance.__protected__['" + key + "'] = function() { instance.__protected__.__virtuals__['" + key + "'](arguments[0]); for (var index in instance.__protected__.__extensions__['" + key + "']) instance.__protected__.__extensions__['" + key + "'][index](arguments[0]); }");
+            eval("instance.__self__['" + key + "'] = function() { instance.__protected__.__virtuals__['" + key + "'](arguments[0]); for (var index in instance.__protected__.__extensions__['" + key + "']) instance.__protected__.__extensions__['" + key + "'][index](arguments[0]); }");
 
         }
 
