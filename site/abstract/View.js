@@ -1,12 +1,12 @@
 $js.compile("View", null, function($public, $private, $protected, $self) {
 
-    $private.field.element = null;
+    $public.field.element = null;
 
     $public.field.views = {};
 
-    $private.field.key = "";
-    $private.field.tag = "";
-    $private.field.selector = "";
+    $public.field.key = "";
+    $public.field.tag = "";
+    $public.field.selector = "";
 
     $private.field.state = "";
     $private.field.anim = "";

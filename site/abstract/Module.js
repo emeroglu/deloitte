@@ -1,8 +1,8 @@
 $js.compile("Module", null, function($public, $private, $protected, $self) {
 
-    $private.field.element = null;
-    $private.field.container = null;
-    $private.field.css = null;
+    $public.field.element = null;
+    $public.field.container = null;
+    $public.field.css = null;
 
     $private.field.views = {};
     $private.field.pages = {};
