@@ -1,12 +1,9 @@
 $js.compile("Page", null, function($public, $private, $protected, $self) {
 
     $private.field.element = null;
-    $private.field.css = null;
+    $private.field.style_elements = [];
 
     $protected.field.views = {};
-
-    $private.field.key = "";
-    $private.field.selector = "";
 
     $private.field.tag = "";
     $public.func.get_tag = function() { return $self.tag; };
@@ -24,20 +21,58 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
 
     $public.virtual.func.is_initial = function() { return false; };
 
+    $private.field.key = "";
     $protected.virtual.func.on_key = function() { return ""; };
 
     $protected.virtual.void.on_construct = function(_views) { };
     $protected.virtual.void.on_style = function(_views) { };
     $protected.virtual.void.on_ready = function(_views, $ready) { $ready(); };
 
-    $private.void.dynamic_css = function(_id) {
 
-        $self.css = document.createElement("style");
-        $self.css.setAttribute("id", _id);
-        $self.css.setAttribute("type", "text/css");
-        document.head.appendChild($self.css);
+    // Styling
+
+    $private.void.generate_style_element = function(_id) {
+
+        let e = document.createElement("style");
+        e.setAttribute("id", _id);
+        e.setAttribute("type", "text/css");
+        document.head.appendChild(e);
+
+        $self.style_elements.push(e);
 
     };
+
+    $private.void.listen_viewport = function() {
+
+        $bcast.listen("viewport_new", function() {
+
+            $self.generate_style_element($self.tag + "-" + $view.port);
+
+        });
+
+    };
+
+    $private.void.page_styling = function() {
+
+        $css.select($self.tag)
+            .begin()
+                .absolute()
+                .sideFull()
+                .mask()
+            .save()
+            .state("initial")
+                .opacity(1)
+            .save()
+            .state("show")
+                .opacity(1)
+            .save()
+            .state("hide")
+                .opacity(0)
+            .save();
+
+    };
+
+    // Recurse
 
     $private.field.keys = [];
 
@@ -67,15 +102,7 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
 
     };
 
-    $private.void.listen_viewport = function() {
-
-        $bcast.listen("viewport_new", function() {
-
-            $self.dynamic_css($self.tag + "-" + $view.port);
-
-        });
-
-    };
+    // Load
 
     $public.void.load = function() {
 
@@ -86,29 +113,14 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
         $self.key = $self.on_key();
         $self.tag = "d-" + $self.key + "-page";
 
-        $self.selector = $self.tag;
-        $css.select($self.selector)
-            .begin()
-                .absolute()
-                .sideFull()
-                .mask()
-            .save()
-            .state("initial")
-                .opacity(1)
-            .save()
-            .state("show")
-                .opacity(1)
-            .save()
-            .state("hide")
-                .opacity(0)
-            .save();
-
-        $self.on_construct($self.views);
-
-        $self.dynamic_css($self.tag);
-
         $self.element = document.createElement($self.tag);
         $self.module.container.appendChild($self.element);
+        
+        $self.on_construct($self.views);
+
+        $self.generate_style_element($self.tag);
+
+        $self.page_styling();
 
         $self.index = -1;
         $self.on_recurse_end = function() {

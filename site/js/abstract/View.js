@@ -4,7 +4,6 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     $protected.field.views = {};
 
-    $private.field.key = "";
     $private.field.name = "";
 
     $private.field.state = "";
@@ -28,12 +27,16 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
     $private.void.on_click = function() {};
     $public.delegate.onClick = function($on_click) { $self.on_click = $on_click; return $self; };
 
+    $private.field.key = "";
     $protected.virtual.func.on_key = function() { return "view"; };
 
     $protected.virtual.func.on_compile = function() { return document.createElement($self.tag); };
     $protected.virtual.void.on_construct = function(_views) { };
     $protected.virtual.void.on_self_style = function(_views) { $self.selection = "self"; $css.target = $view.page.get_tag(); };
     $protected.virtual.void.on_ready = function(_views, $ready) { $ready(); };
+
+
+    // Styling
 
     $protected.virtual.void.on_style = function(_views) { $self.selection = "path"; $css.target = $view.module.get_tag();  };
 
@@ -49,7 +52,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     $protected.virtual.void.on_viewport_changed = function(_port, _views) { };
 
-
+    $private.field.selection = "";
     $public.func.select = function() { 
         
         if ($self.selection == "self")
@@ -63,7 +66,6 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     };
 
-    $private.field.selection = "";
     $private.func.cascading_path = function() {
 
         if ($self.parent.cascading_path == undefined)
@@ -90,6 +92,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     };
 
+    // Recurse
 
     $private.field.keys = [];
 
@@ -119,6 +122,8 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     };
 
+    // Load
+
     $public.void.load = function() {
 
         $self.listen_viewport();
@@ -126,9 +131,9 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         $self.key = $self.on_key();
         $self.tag = "d-" + $self.key;
 
-        $self.on_construct($self.views);
-
         $self.element = $self.on_compile();
+        
+        $self.on_construct($self.views);
 
         if ($self.parent != null)
             $self.parent.element.appendChild($self.element);
@@ -153,6 +158,8 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         $self.recurse();
 
     };
+
+    // Sneaky Load
 
     $private.void.sneaky_recurse = function() {
 

@@ -2,13 +2,10 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
     $private.field.element = null;
     $private.field.container = null;
-    $private.field.css = null;
+    $private.field.style_elements = [];
 
     $protected.field.views = {};
     $protected.field.pages = {};
-
-    $private.field.key = "";
-    $private.field.selector = "";
 
     $private.field.tag = "";
     $public.func.get_tag = function() { return $self.tag; };
@@ -16,27 +13,68 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
     $private.field.loaded = false;
     $public.func.is_loaded = function() { return $self.loaded; };
 
-    $private.field.container_generated = false;
-
     $public.delegate.begin = function() { $self.parent = null; return $self; };
 
     $private.void.on_load = function() {};
     $public.delegate.onLoad = function($on_load) { $self.on_load = $on_load; return $self; };
 
+    $private.field.key = "";
     $protected.virtual.func.on_key = function() { return ""; };
 
     $protected.virtual.void.on_construct = function(_pages, _views) { };
-    $protected.virtual.void.on_style = function(_pages, _views) { };
     $protected.virtual.void.on_ready = function(_pages, _views, $ready) { $ready(); };
 
-    $private.void.dynamic_css = function(_id) {
 
-        $self.css = document.createElement("style");
-        $self.css.setAttribute("id", _id);
-        $self.css.setAttribute("type", "text/css");
-        document.head.appendChild($self.css);
+    // Styling
+
+    $private.void.generate_style_element = function(_id) {
+
+        let e = document.createElement("style");
+        e.setAttribute("id", _id);
+        e.setAttribute("type", "text/css");
+        document.head.appendChild(e);
+
+        $self.style_elements.push(e);
 
     };
+
+    $private.void.listen_viewport = function() {
+
+        $bcast.listen("viewport_new", function() {
+
+            $self.generate_style_element($self.tag + "-" + $view.port);
+
+            $view.sneaky_load();
+
+        });
+
+    };
+
+    $private.void.module_styling = function() {
+
+        $css.select($self.tag)
+            .begin()
+                .absolute()
+                .sideFull()
+                .mask()
+            .save();
+
+        $css.select($self.tag + " d-pages")
+            .begin()
+                .absolute()
+                .sideFull()
+                .mask()
+            .save();
+
+    };
+
+    $private.void.view_styling = function($) {
+
+        $view.sneaky_load();
+
+    };
+
+    // Recurse
 
     $private.field.merged = [];
     $private.void.merge = function() {
@@ -60,17 +98,12 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
         $self.index++;
 
         if ($self.index == 0) {
-            
             $self.merge();
-
         }
         
         if ($self.index == $self.merged.length) {
-            
             $self.on_recurse_end();
-
             return;
-
         }
 
         let item = $self.merged[$self.index];
@@ -87,15 +120,12 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
         } else if (item.type == "page") {
 
-            if (!$self.container_generated) {
-                $self.container = document.createElement("d-pages");
-                $self.element.appendChild($self.container);
-                $self.container_generated = true;
-            }
-
             let page = item.obj;
 
             if (page.is_initial()) {
+
+                $self.container = document.createElement("d-pages");
+                $self.element.appendChild($self.container);
 
                 $self.initial_page = page;
 
@@ -115,20 +145,7 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
     };
 
-    $private.void.listen_viewport = function() {
-
-        $bcast.listen("viewport_new", function() {
-
-            $self.dynamic_css($self.tag + "-" + $view.port);
-
-            new DummyView()
-                .begin()
-                    .setParent($self)
-                .sneaky_load();
-
-        });
-
-    };
+    // Load
 
     $public.void.load = function() {
 
@@ -139,45 +156,30 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
         $self.key = $self.on_key();
         $self.tag = "d-" + $self.key + "-module";
 
-        $self.selector = $self.tag;
-
         $self.element = document.createElement($self.tag);
         document.body.appendChild($self.element);
 
         $self.on_construct($self.pages, $self.views);
 
-        $self.dynamic_css($self.tag);
+        $self.generate_style_element($self.tag);
+        
         $css.target = $self.tag;
-        $css.select($self.selector)
-                .begin()
-                    .absolute()
-                    .sideFull()
-                    .mask()
-                .save();
+        $self.module_styling();
+        $self.view_styling();
 
-        new DummyView()
-            .begin()
-                .setParent($self)
-                .onLoad(function() {
+        $self.index = -1;
+        $self.on_recurse_end = function() {
 
-                    $self.index = -1;
-                    $self.on_recurse_end = function() {
-            
-                        $self.on_style($self.pages, $self.views);
-            
-                        $self.initial_page.show(function() {
-            
-                            $self.loaded = true;
+            $self.initial_page.show(function() {
 
-                            $self.on_ready($self.pages, $self.views, $self.on_load);
-            
-                        });
-            
-                    };
-                    $self.recurse();
+                $self.loaded = true;
 
-                })
-            .sneaky_load();
+                $self.on_ready($self.pages, $self.views, $self.on_load);
+
+            });
+
+        };
+        $self.recurse();
 
     };
 
@@ -191,7 +193,9 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
             $self.pages[key].destroy();
         }
 
-        $self.css.remove();
+        for (let index in $self.style_elements) {
+            $self.style_elements[index].remove();
+        }
 
         $self.container.remove();
         $self.element.remove();
