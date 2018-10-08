@@ -48,10 +48,8 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.top.views.list
             .begin()
-                .setFloat("right")
-                .onWidth(function() {
-                    return 120;
-                })
+                .setSide("right")
+                .setWidth(120)
                 .onModel(function() {
                     return ["asd", "qwe"];
                 })
