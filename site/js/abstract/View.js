@@ -2,7 +2,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     $private.field.element = null;
 
-    $protected.field.views = {};
+    $public.field.views = {};
 
     $private.field.name = "";
 
@@ -132,7 +132,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         $self.tag = "d-" + $self.key;
 
         $self.element = $self.on_compile();
-        
+
         $self.on_construct($self.views);
 
         if ($self.parent != null)

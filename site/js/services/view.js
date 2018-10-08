@@ -7,7 +7,7 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
     $public.field.page = {};
 
     $private.field.index = 0;
-    $private.field.types = [DummyView];
+    $private.field.types = [AbsoluteLayout, BannerView, HorizontalList, ImageView, RelativeLayout, SearchView, StoreSelectorView, TextView];
     $private.void.recurse = function() {
 
         $self.index++;

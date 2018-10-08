@@ -3,7 +3,7 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
     $private.field.element = null;
     $private.field.style_elements = [];
 
-    $protected.field.views = {};
+    $public.field.views = {};
 
     $private.field.tag = "";
     $public.func.get_tag = function() { return $self.tag; };
@@ -25,6 +25,8 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
     $protected.virtual.func.on_key = function() { return ""; };
 
     $protected.virtual.void.on_construct = function(_views) { };
+    $protected.virtual.void.on_flourish = function(_views) { };
+    $protected.virtual.void.on_feed = function(_views) { };
     $protected.virtual.void.on_style = function(_views) { };
     $protected.virtual.void.on_ready = function(_views, $ready) { $ready(); };
 
@@ -151,6 +153,8 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
         $self.module.container.appendChild($self.element);
 
         $self.on_construct($self.views);
+        $self.on_flourish($self.views);
+        $self.on_feed($self.views);
 
         $self.generate_style_element($self.tag);
 

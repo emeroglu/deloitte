@@ -4,8 +4,8 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
     $private.field.container = null;
     $private.field.style_elements = [];
 
-    $protected.field.views = {};
-    $protected.field.pages = {};
+    $public.field.views = {};
+    $public.field.pages = {};
 
     $private.field.tag = "";
     $public.func.get_tag = function() { return $self.tag; };
