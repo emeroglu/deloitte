@@ -50,6 +50,10 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
     $private.void.load_script = function() {
 
         $self.html += "\n\n";
+
+        $self.html += "            String.prototype.replaceAll = function(s, r) { let t = this; return t.replace(new RegExp(s, 'g'), r); };";
+        $self.html += "\n\n";
+
         $self.html += "            let $window = window;\n";
         $self.html += "            let $global = $window;\n";
 
@@ -68,7 +72,7 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
         $self.index = -1;
         $self.on_recurse_end = function() {
 
-            $self.html += "       </script>\n"
+            $self.html += "\n       </script>\n"
     
             $self.html += "   </body>\n";
             $self.html += "</html>";
