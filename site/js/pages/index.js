@@ -25,13 +25,13 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
     $protected.override.void.on_flourish = function(_views) {
 
-        _views.top.views.list = new HorizontalList();
+        _views.top.views.list = new HorizontalListView();
 
         _views.store_selection.views.store_selector = new StoreSelectorView();
         _views.search.views.search_view = new SearchView();
-        _views.account.views.list = new HorizontalList();
+        _views.account.views.list = new HorizontalListView();
 
-        _views.nav.views.list = new HorizontalList();
+        _views.nav.views.list = new HorizontalListView();
 
         _views.headline.views.text = new TextView();
 
@@ -46,7 +46,21 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
     $protected.override.void.on_feed = function(_views) {
 
+        _views.top.views.list
+            .begin()
+                .setFloat("right")
+                .onWidth(function() {
+                    return 120;
+                })
+                .onModel(function() {
+                    return ["asd", "qwe"];
+                })
+                .onGenerate(function(_view, _model) {
 
+                    _view.views.text = new View();
+                    _view.views.text.set_name(_model);
+
+                });
 
     };
 

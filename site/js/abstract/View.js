@@ -4,11 +4,12 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     $public.field.views = {};
 
-    $private.field.name = "";
-
     $private.field.state = "";
     $private.field.anim = "";
     $private.field.duration = 0;
+
+    $private.field.name = "";
+    $public.func.set_name = function(_name) { $self.name = _name; };
 
     $private.field.tag = "";
     $public.func.get_tag = function() { return $self.tag; };
@@ -22,13 +23,14 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
     $public.delegate.setParent = function(_parent) { $self.parent = _parent; return $self; };
 
     $private.void.on_load = function() {};
-    $public.delegate.onLoad = function($on_load) { $self.on_load = $on_load; return $self; };
+    $public.delegate.onLoad = function($delegate) { $self.on_load = $delegate; return $self; };
 
     $private.void.on_click = function() {};
-    $public.delegate.onClick = function($on_click) { $self.on_click = $on_click; return $self; };
+    $public.delegate.onClick = function($delegate) { $self.on_click = $delegate; return $self; };
 
     $private.field.key = "";
     $protected.virtual.func.on_key = function() { return "view"; };
+    $public.void.set_key = function(_key) { $self.key = _key; };
 
     $protected.virtual.func.on_compile = function() { return document.createElement($self.tag); };
     $protected.virtual.void.on_construct = function(_views) { };
@@ -128,7 +130,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
         $self.listen_viewport();
 
-        $self.key = $self.on_key();
+        $self.key = ($self.key == "") ? $self.on_key() : $self.key;
         $self.tag = "d-" + $self.key;
 
         $self.element = $self.on_compile();

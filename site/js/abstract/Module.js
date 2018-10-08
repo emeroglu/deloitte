@@ -16,7 +16,7 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
     $public.delegate.begin = function() { $self.parent = null; return $self; };
 
     $private.void.on_load = function() {};
-    $public.delegate.onLoad = function($on_load) { $self.on_load = $on_load; return $self; };
+    $public.delegate.onLoad = function($delegate) { $self.on_load = $delegate; return $self; };
 
     $private.field.key = "";
     $protected.virtual.func.on_key = function() { return ""; };

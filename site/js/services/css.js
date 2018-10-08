@@ -149,6 +149,14 @@ $js.compile("$css", null, function($public, $private, $protected, $self) {
                 o.json.position = "absolute";
                 return this;
             },
+            relative: function () {
+                o.json.position = "relative";
+                return this;
+            },
+            float: function(f) {
+                o.json.float = f;
+                return this;
+            },
             relativeLeft: function () {
                 o.json.position = "relative";
                 o.json.float = "left";

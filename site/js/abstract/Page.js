@@ -17,7 +17,7 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
     $public.delegate.setModule = function(_module) { $self.module = _module; return $self; };
 
     $private.void.on_load = function() {};
-    $public.delegate.onLoad = function($on_load) { $self.on_load = $on_load; return $self; };
+    $public.delegate.onLoad = function($delegate) { $self.on_load = $delegate; return $self; };
 
     $public.virtual.func.is_initial = function() { return false; };
 
