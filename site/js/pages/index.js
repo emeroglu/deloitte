@@ -62,6 +62,24 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
                 });
 
+        _views.account.views.list
+            .begin()
+                .setSide("right")
+                .setItemPadding(10)
+                .onModel(function() {
+                    return [
+                        { icon: "user", text: "My Account" },
+                        { icon: "shopping-cart", text: "Cart" }
+                    ];
+                })
+                .onGenerate(function(_view, _model) {
+
+                    _view.views.item = new AccountItemView();
+                    _view.views.item.set_icon(_model.icon);
+                    _view.views.item.set_text(_model.text);
+
+                });
+
     };
 
     $protected.extension.void.on_style = function(_views) {
@@ -122,6 +140,11 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
         //
 
         _views.top.views.list.views.container.select()
+            .begin()
+                .marginRight(20)
+            .save();
+
+        _views.account.views.list.views.container.select()
             .begin()
                 .marginRight(20)
             .save();

@@ -34,6 +34,8 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     $protected.virtual.func.on_compile = function() { return document.createElement($self.tag); };
     $protected.virtual.void.on_construct = function(_views) { };
+    $protected.virtual.void.on_flourish = function(_views) { };
+    $protected.virtual.void.on_feed = function(_views) { };
     $protected.virtual.void.on_self_style = function(_views) { $self.selection = "self"; $css.target = $view.page.get_tag(); };
     $protected.virtual.void.on_ready = function(_views, $ready) { $ready(); };
 
@@ -41,7 +43,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
     // Styling
 
     $protected.virtual.void.on_style = function(_views) { $self.selection = "path"; $css.target = $view.module.get_tag();  };
-    $protected.virtual.void.on_view_style = function(_views) { $self.selection = "self"; $css.target = $view.page.get_tag();  };
+    $protected.virtual.void.on_view_style = function(_views) { $self.selection = "path"; $css.target = $view.page.get_tag();  };
 
     $protected.virtual.void.on_wide_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port;  };
     $protected.virtual.void.on_medium_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port; };
@@ -68,13 +70,30 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
             return $css.select($self.cascading_path() + "[d-viewport='" + $view.port + "']"); 
 
     };
+    $public.func.selector = function() { 
+        
+        if ($self.selection == "self")
+            return $self.tag + "[d-id='" + $self.__id__ + "']"; 
+        else if ($self.selection == "self_viewport")
+            return $self.tag + "[d-id='" + $self.__id__ + "'][d-viewport='" + $view.port + "']"; 
+        else if ($self.selection == "path")
+            return $self.cascading_path(); 
+        else if ($self.selection == "path_viewport")
+            return $self.cascading_path() + "[d-viewport='" + $view.port + "']"; 
+
+    };
 
     $private.func.cascading_path = function() {
 
         if ($self.parent.cascading_path == undefined)
             return $self.tag;
-        else
-            return $self.parent.cascading_path() + " " + $self.tag;
+        else {
+            console.log("name: " + $self.name);
+            if ($self.name == "")
+                return $self.parent.cascading_path() + " " + $self.tag;
+            else
+                return $self.parent.cascading_path() + " " + $self.tag + "[d-name='" + $self.name +  "']";
+        }
 
     };
 
@@ -144,6 +163,8 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         $self.element = $self.on_compile();
 
         $self.on_construct($self.views);
+        $self.on_flourish($self.views);
+        $self.on_feed($self.views);
 
         if ($self.parent != null)
             $self.parent.element.appendChild($self.element);

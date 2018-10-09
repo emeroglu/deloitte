@@ -1,5 +1,7 @@
 $js.compile("IconView", View, function($public, $private, $protected, $self) {
 
+    $private.field.i = null;
+
     $private.field.icon = "";
     $public.void.set_icon = function(_icon) { $self.icon = _icon; };
 
@@ -30,10 +32,10 @@ $js.compile("IconView", View, function($public, $private, $protected, $self) {
         else
             fa = "fa";
 
-        let i = document.createElement("i");
-        i.className = fa + " fa-" + $self.icon;
+        $self.i = document.createElement("i");
+        $self.i.className = fa + " fa-" + $self.icon;
 
-        e.appendChild(i);
+        e.appendChild($self.i);
 
         return e;
 
@@ -47,7 +49,7 @@ $js.compile("IconView", View, function($public, $private, $protected, $self) {
                 .sideFull()
             .save();
 
-        $css.select($sef.tag + " i")
+        $css.select($self.tag + " i")
             .begin()
                 .absolute()
                 .textCenter()
@@ -57,7 +59,7 @@ $js.compile("IconView", View, function($public, $private, $protected, $self) {
 
     $protected.extension.void.on_self_style = function(_views) {
 
-        $css.select($self.tag + " i")
+        $css.select($self.tag + "[d-id='" + $self.__id__ + "'] i")
             .begin()
                 .textSize(($self.size == 0) ? 22 : $self.size)
                 .textColor(($self.color == "") ? "#000000" : $self.color)
