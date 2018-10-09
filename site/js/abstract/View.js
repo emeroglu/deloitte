@@ -1,6 +1,6 @@
 $js.compile("View", null, function($public, $private, $protected, $self) {
 
-    $private.field.element = null;
+    $public.field.element = null;
 
     $public.field.views = {};
 
@@ -41,6 +41,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
     // Styling
 
     $protected.virtual.void.on_style = function(_views) { $self.selection = "path"; $css.target = $view.module.get_tag();  };
+    $protected.virtual.void.on_view_style = function(_views) { $self.selection = "self"; $css.target = $view.page.get_tag();  };
 
     $protected.virtual.void.on_wide_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port;  };
     $protected.virtual.void.on_medium_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port; };
@@ -94,6 +95,12 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     };
 
+    $private.void.listen_page = function() {
+
+        $bcast.listen("page_is_in_view", function() { $self.on_view_style($self.views); })
+
+    };
+
     // Recurse
 
     $private.field.keys = [];
@@ -129,6 +136,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
     $public.void.load = function() {
 
         $self.listen_viewport();
+        $self.listen_page();
 
         $self.key = ($self.key == "") ? $self.on_key() : $self.key;
         $self.tag = "d-" + $self.key;

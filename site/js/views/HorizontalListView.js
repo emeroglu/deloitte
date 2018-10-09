@@ -3,11 +3,11 @@ $js.compile("HorizontalListView", ListView, function($public, $private, $protect
     $private.field.side = "left";
     $public.delegate.setSide = function(_side) { $self.side = _side; return $self; };
 
+    $private.func.padding = 0;
+    $public.delegate.setItemPadding = function(_padding) { $self.padding = _padding; return $self; };
+    
     $protected.override.func.on_key = function() { return "horizontal-list-view"; };
 
-    $private.func.width = 0;
-    $public.delegate.setWidth = function(_width) { $self.width = _width; return $self; };
-    
     $protected.override.void.on_construct = function(_views) {
 
         $self.model = $self.on_model();
@@ -19,7 +19,7 @@ $js.compile("HorizontalListView", ListView, function($public, $private, $protect
             let name = "item_" + index;
             let view = new ListItemView();
             view.set_name(name);
-            view.set_width($self.width);
+            view.set_padding($self.padding);
 
             $self.on_generate(view, $self.model[index]);
 
@@ -46,12 +46,11 @@ $js.compile("HorizontalListView", ListView, function($public, $private, $protect
 
     };
 
-    $protected.extension.void.on_self_style = function(_views) {
+    $protected.extension.void.on_view_style = function(_views) {
 
         _views.container.select()
             .begin()
                 .float($self.side)
-                .width($self.width * $self.model.length)
             .save();
 
     };

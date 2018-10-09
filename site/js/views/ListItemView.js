@@ -1,7 +1,7 @@
 $js.compile("ListItemView", View, function($public, $private, $protected, $self) {
 
-    $private.field.width = 0;
-    $public.delegate.set_width = function(_width) { $self.width = _width; };
+    $private.field.padding = 0;
+    $public.void.set_padding = function(_padding) { $self.padding = _padding; };
 
     $protected.override.func.on_key = function() { return "list-item-view"; };
 
@@ -9,8 +9,8 @@ $js.compile("ListItemView", View, function($public, $private, $protected, $self)
 
         $self.select()
             .begin()
-                .width($self.width)
-            .commit();
+                .paddingHorizontal($self.padding)
+            .save();
 
     };
 

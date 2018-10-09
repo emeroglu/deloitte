@@ -74,15 +74,16 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
 
         $self.queue.push("../site/js/views/ListView.js");
         $self.queue.push("../site/js/views/ListItemView.js");
+        $self.queue.push("../site/js/views/TextView.js");
 
         $self.queue.push("../site/js/views/AbsoluteLayout.js");
         $self.queue.push("../site/js/views/BannerView.js");
         $self.queue.push("../site/js/views/HorizontalListView.js");
         $self.queue.push("../site/js/views/ImageView.js");
         $self.queue.push("../site/js/views/RelativeLayout.js");
+        $self.queue.push("../site/js/views/ReflectiveTextView.js");
         $self.queue.push("../site/js/views/SearchView.js");
         $self.queue.push("../site/js/views/StoreSelectorView.js");
-        $self.queue.push("../site/js/views/TextView.js");
         
         $self.queue.push("../site/js/init.js");
 

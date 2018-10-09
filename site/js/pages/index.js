@@ -49,14 +49,16 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
         _views.top.views.list
             .begin()
                 .setSide("right")
-                .setWidth(120)
+                .setItemPadding(10)
                 .onModel(function() {
-                    return ["asd", "qwe"];
+                    return ["Tools & Vehicles", "Credit Services", "Pro Services", "Order Status", "Customer Support", "Français"];
                 })
                 .onGenerate(function(_view, _model) {
 
-                    _view.views.text = new View();
-                    _view.views.text.set_name(_model);
+                    _view.views.text = new ReflectiveTextView();
+                    _view.views.text.set_text(_model);
+                    _view.views.text.set_height(60);
+                    _view.views.text.set_size(12);
 
                 });
 
@@ -115,6 +117,13 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
             .begin()
                 .widthHalf()
                 .height(200)
+            .save();
+
+        //
+
+        _views.top.views.list.views.container.select()
+            .begin()
+                .marginRight(20)
             .save();
 
     };
