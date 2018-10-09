@@ -44,7 +44,7 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
             $self.generate_style_element($self.tag + "-" + $view.port);
 
-            $view.sneaky_load();
+            $view.sneaky_load("viewport_new");
 
         });
 
@@ -70,7 +70,7 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
     $private.void.view_styling = function($) {
 
-        $view.sneaky_load();
+        $view.sneaky_load("initial");
 
     };
 
@@ -176,7 +176,7 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
                 setTimeout(function() {
 
-                    $bcast.shout("page_is_in_view");
+                    $view.sneaky_load("page");
 
                     $self.on_ready($self.pages, $self.views, $self.on_load);
 

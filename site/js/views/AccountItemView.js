@@ -11,7 +11,10 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
     $protected.override.void.on_construct = function(_views) {
 
         _views.left = new RelativeLayout();
+        _views.left.set_name("left");
+        
         _views.right = new RelativeLayout();
+        _views.right.set_name("right");
 
     };
 
@@ -23,9 +26,6 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
     };
 
     $protected.override.void.on_feed = function(_views) {
-
-        _views.left.set_name("left");
-        _views.right.set_name("right");
 
         _views.left.views.icon.set_icon($self.icon);
         _views.left.views.icon.set_size(20);

@@ -88,7 +88,6 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         if ($self.parent.cascading_path == undefined)
             return $self.tag;
         else {
-            console.log("name: " + $self.name);
             if ($self.name == "")
                 return $self.parent.cascading_path() + " " + $self.tag;
             else
@@ -226,10 +225,12 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         $self.index = -1;
         $self.on_recurse_end = function() {
 
-            if ($view.module.is_loaded())
+            if ($view.get_purpose() == "viewport")
                 eval("$self.on_" + $view.port + "_style($self.views);");
-            else
+            else if ($view.get_purpose() == "initial")
                 $self.on_style($self.views);
+            else if ($view.get_purpose() == "page")
+                $self.on_view_style($self.views);
 
             $self.on_load();
 

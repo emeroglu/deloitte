@@ -46,7 +46,7 @@ $js.compile("HorizontalListView", ListView, function($public, $private, $protect
 
     };
 
-    $protected.extension.void.on_view_style = function(_views) {
+    $protected.extension.void.on_self_style = function(_views) {
 
         _views.container.select()
             .begin()
