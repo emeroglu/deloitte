@@ -35,6 +35,7 @@ $js.compile("ImageView", View, function($public, $private, $protected, $self) {
                 .begin()
                     .absolute()
                     .sideFull()
+                    .mask()
                 .save();
 
             $css.select($self.tag + " img")

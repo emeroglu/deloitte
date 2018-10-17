@@ -10,7 +10,7 @@ $js.compile("BannerView", View, function($public, $private, $protected, $self) {
 
     $protected.override.void.on_feed = function(_views) {
 
-        _views.image.set_src("https://images.lowes.ca/images/articles/xx_l1_kitchen_main.jpg");
+        _views.image.set_src("/Banner");
 
     };
 
@@ -20,6 +20,7 @@ $js.compile("BannerView", View, function($public, $private, $protected, $self) {
             .begin()
                 .relativeLeft()
                 .widthCropFromFull(50)
+                .marginTop(10)
                 .marginLeft(25)
             .save();
 
@@ -31,6 +32,7 @@ $js.compile("BannerView", View, function($public, $private, $protected, $self) {
             .begin()
                 .relativeLeft()
                 .widthFull()
+                .marginTop(0)
                 .marginLeft(0)
             .save();
 

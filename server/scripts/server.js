@@ -23,6 +23,12 @@ $js.compile("$server", null, function($public, $private, $protected, $self) {
                 _response.write("Cache removed.");
                 _response.end();
 
+            } else if (_request.url == "/Banner") {
+
+                _response.writeHead(200, { "Content-Type": "image/jpeg" })
+
+                $fs.createReadStream("files/banner.jpg").pipe(_response);
+
             } else {
 
                 _response.write("OK");

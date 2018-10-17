@@ -107,7 +107,7 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
                 });
 
         _views.headline.views.text.set_text("BUY ONLINE PICK UP IN-STORE Available for in-store products");
-        _views.headline.views.text.set_height(30);
+        _views.headline.views.text.set_height(25);
         _views.headline.views.text.set_size(11);
         _views.headline.views.text.set_color("#FFFFFF");
 
@@ -157,7 +157,7 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.headline.select()
             .begin()
-                .height(30)
+                .height(25)
                 .backgroundColor("#b84b14")
             .save();
 
