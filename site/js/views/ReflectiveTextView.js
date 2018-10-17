@@ -2,7 +2,7 @@ $js.compile("ReflectiveTextView", TextView, function($public, $private, $protect
 
     $protected.override.func.on_key = function() { return "reflective-text-view"; };
 
-    $protected.extension.void.on_self_style = function(_views) {
+    $protected.extension.void.on_style = function(_views) {
 
         $self.select()
             .begin()

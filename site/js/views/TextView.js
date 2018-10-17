@@ -12,6 +12,9 @@ $js.compile("TextView", View, function($public, $private, $protected, $self) {
     $private.field.size = 16;
     $public.void.set_size = function(_size) { $self.size = _size; };
 
+    $private.field.color = "#666666";
+    $public.void.set_color = function(_color) { $self.color = _color; };
+
     $protected.override.func.on_key = function() { return "text-view"; };
 
     $protected.override.void.on_compile = function() {
@@ -39,6 +42,7 @@ $js.compile("TextView", View, function($public, $private, $protected, $self) {
                 .textSize($self.size)
                 .textAlign($self.align)
                 .textHeight($self.height)
+                .textColor($self.color)
             .save();
 
     };
