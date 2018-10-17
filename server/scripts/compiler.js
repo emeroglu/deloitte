@@ -27,7 +27,7 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
         $self.html += "   <head>\n";
         $self.html += "       <meta charset='UTF-8' />\n";
         $self.html += "       <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, users-scalable=0'>\n";
-        $self.html += "       <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' />";
+        $self.html += "       <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,800' rel='stylesheet' />";
         $self.html += "       <link href='https://use.fontawesome.com/releases/v5.3.1/css/all.css' rel='stylesheet' />";
 
 

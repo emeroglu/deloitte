@@ -6,6 +6,9 @@ $js.compile("TextView", View, function($public, $private, $protected, $self) {
     $private.field.align = "center";
     $public.void.set_align = function(_align) { $self.align = _align; };
 
+    $private.field.weight = 400;
+    $public.void.set_weight = function(_weight) { $self.weight = _weight; };
+
     $private.field.height = 0;
     $public.void.set_height = function(_height) { $self.height = _height; };
 
@@ -43,6 +46,7 @@ $js.compile("TextView", View, function($public, $private, $protected, $self) {
                 .textAlign($self.align)
                 .textHeight($self.height)
                 .textColor($self.color)
+                .textWeight($self.weight)
             .save();
 
     };

@@ -32,8 +32,9 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
         _views.left.views.icon.set_side(40);
 
         _views.right.views.text.set_text($self.text);
-        _views.right.views.text.set_height(80);
+        _views.right.views.text.set_height(60);
         _views.right.views.text.set_size(13);
+        _views.right.views.text.set_weight(600);
 
     };
 
@@ -42,12 +43,12 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
         _views.left.select()
             .begin()
                 .width(40)
-                .height(80)
+                .height(60)
             .save();
 
         _views.right.select()
             .begin()
-                .height(80)
+                .height(60)
             .save();
 
     };

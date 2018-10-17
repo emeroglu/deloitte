@@ -115,10 +115,25 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.bottom.views.image.views.image.set_src("/Image");
 
-        _views.bottom.views.text.views.header.set_text("fghghjkjh");
-        _views.bottom.views.text.views.header.set_height(30);
-        _views.bottom.views.text.views.header.set_size(11);
-        _views.bottom.views.text.views.header.set_color("#FFFFFF");
+        _views.bottom.views.text.views.header.set_text("SAVE ON LIGHTING EVENT");
+        _views.bottom.views.text.views.header.set_align("left");
+        _views.bottom.views.text.views.header.set_height(40);
+        _views.bottom.views.text.views.header.set_size(30);
+        _views.bottom.views.text.views.header.set_weight(800);
+        _views.bottom.views.text.views.header.set_color("#000000");
+
+        _views.bottom.views.text.views.detail.set_text("Brighten up your home with great savings on lighting");
+        _views.bottom.views.text.views.detail.set_align("left");
+        _views.bottom.views.text.views.detail.set_height(40);
+        _views.bottom.views.text.views.detail.set_size(14);
+        _views.bottom.views.text.views.detail.set_weight(600);
+
+        _views.bottom.views.text.views.link.set_text("Shop All");
+        _views.bottom.views.text.views.link.set_align("left");
+        _views.bottom.views.text.views.link.set_height(40);
+        _views.bottom.views.text.views.link.set_size(16);
+        _views.bottom.views.text.views.link.set_weight(800);
+        _views.bottom.views.text.views.link.set_color("#000000");
 
     };
 
@@ -137,19 +152,19 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
         _views.compound.views.store_selection.select()
             .begin()
                 .widthPercent(30)
-                .height(80)
+                .heightFull()
             .save();
 
         _views.compound.views.search.select()
             .begin()
                 .widthPercent(40)
-                .height(80)
+                .heightFull()
             .save();
 
         _views.compound.views.account.select()
             .begin()
                 .widthPercent(30)
-                .height(80)
+                .heightFull()
             .save();
 
         _views.nav.select()
@@ -176,8 +191,24 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.bottom.views.text.select()
             .begin()
-                .widthHalf()
+                .widthCropFromHalf(20)
                 .height(200)
+                .marginLeft(20)
+            .save();
+
+        _views.bottom.views.text.views.header.select()
+            .begin()
+                .top(20)
+            .save();
+            
+        _views.bottom.views.text.views.detail.select()
+            .begin()
+                .top(60)
+            .save();
+
+        _views.bottom.views.text.views.link.select()
+            .begin()
+                .top(100)
             .save();
 
         _views.footer.select()

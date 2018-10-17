@@ -34,6 +34,7 @@ $js.compile("NavItemView", View, function($public, $private, $protected, $self) 
         _views.right.views.text.set_text($self.text);
         _views.right.views.text.set_height(60);
         _views.right.views.text.set_size(13);
+        _views.right.views.text.set_weight(600);
 
     };
 
