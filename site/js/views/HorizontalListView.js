@@ -38,7 +38,7 @@ $js.compile("HorizontalListView", ListView, function($public, $private, $protect
                 .horizontalScroll()
             .save();
 
-        $css.select("d-horizontal-list-view d-view d-list-item-view")
+        $css.select(_views.container.selector() + " d-list-item-view")
             .begin()
                 .relativeLeft()
                 .heightFull()

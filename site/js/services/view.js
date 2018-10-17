@@ -10,7 +10,7 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
     $public.func.get_purpose = function() { return $self.purpose; };
 
     $private.field.index = 0;
-    $private.field.types = [AbsoluteLayout, AccountItemView, BannerView, HorizontalListView, IconView, ImageView, ListItemView, ListView, RelativeLayout, ReflectiveTextView, SearchView, StoreSelectorView, TextView];
+    $private.field.types = [AbsoluteLayout, AccountItemView, BannerView, ContentLayout, FullWideLayout, HorizontalListView, IconView, ImageView, NavItemView, ListItemView, ListView, RelativeLayout, ReflectiveImageView, ReflectiveTextView, SearchView, StoreSelectorView, TextView];
     $private.void.recurse = function() {
 
         $self.index++;

@@ -44,7 +44,7 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
             $self.generate_style_element($self.tag + "-" + $view.port);
 
-            $view.sneaky_load("viewport_new");
+            $view.sneaky_load("viewport");
 
         });
 
@@ -174,13 +174,9 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
                 $self.loaded = true;
 
-                setTimeout(function() {
+                $view.sneaky_load("page");
 
-                    $view.sneaky_load("page");
-
-                    $self.on_ready($self.pages, $self.views, $self.on_load);
-
-                }, 250);
+                $self.on_ready($self.pages, $self.views, $self.on_load);
 
             });
 
