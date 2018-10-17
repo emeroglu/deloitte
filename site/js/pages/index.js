@@ -25,6 +25,8 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
         _views.bottom.views.image = new RelativeLayout();
         _views.bottom.views.text = new RelativeLayout();
 
+        _views.footer = new FullWideLayout();
+
     };
 
     $protected.override.void.on_flourish = function(_views) {
@@ -41,7 +43,7 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.banner.views.banner = new BannerView();
 
-        _views.bottom.views.image.views.image = new ImageView();
+        _views.bottom.views.image.views.image = new ReflectiveImageView();
         _views.bottom.views.text.views.header = new TextView();
         _views.bottom.views.text.views.detail = new TextView();
         _views.bottom.views.text.views.link = new TextView();
@@ -176,6 +178,11 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
             .begin()
                 .widthHalf()
                 .height(200)
+            .save();
+
+        _views.footer.select()
+            .begin()
+                .height(150)
             .save();
 
         //

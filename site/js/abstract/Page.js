@@ -66,7 +66,6 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
             .begin()
                 .absolute()
                 .widthFull()
-                .heightFull()
                 .backgroundColor("white")
                 .mask()
             .save()
