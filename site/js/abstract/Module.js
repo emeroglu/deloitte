@@ -63,7 +63,7 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
             .begin()
                 .absolute()
                 .sideFull()
-                .verticalScroll()
+                .mask()
             .save();
 
     };

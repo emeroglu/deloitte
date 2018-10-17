@@ -254,7 +254,12 @@ $js.compile("$css", null, function($public, $private, $protected, $self) {
             },
             widthCentered: function (px) {
                 o.json.width = px + "px";
-                o.json.left = "calc(50% - " + (px * 0.5) + "px)";
+                if (o.json.position == "absolute")
+                    o.json.left = "calc(50% - " + (px * 0.5) + "px)";
+                else {
+                    o.json["margin-left"] = "calc(50% - " + (px * 0.5) + "px)";
+                    o.json["margin-right"] = "calc(50% - " + (px * 0.5) + "px)";
+                }
                 return this;
             },
             widthFull: function () {
