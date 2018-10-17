@@ -19,21 +19,8 @@ $js.compile("BannerView", View, function($public, $private, $protected, $self) {
         $self.select()
             .begin()
                 .relativeLeft()
-                .widthCropFromFull(50)
-                .marginTop(10)
-                .marginLeft(25)
-            .save();
-
-    };
-
-    $protected.extension.void.on_mobile_style = function(_views) {
-
-        $self.select()
-            .begin()
-                .relativeLeft()
                 .widthFull()
-                .marginTop(0)
-                .marginLeft(0)
+                .marginTop(10)
             .save();
 
     };

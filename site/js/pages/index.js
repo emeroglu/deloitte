@@ -111,7 +111,7 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
         _views.headline.views.text.set_size(11);
         _views.headline.views.text.set_color("#FFFFFF");
 
-        _views.bottom.views.image.views.image.set_src("https://images.lowes.ca/images/articles/xx_l1_kitchen_main.jpg");
+        _views.bottom.views.image.views.image.set_src("/Image");
 
         _views.bottom.views.text.views.header.set_text("fghghjkjh");
         _views.bottom.views.text.views.header.set_height(30);
@@ -159,6 +159,11 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
             .begin()
                 .height(25)
                 .backgroundColor("#b84b14")
+            .save();
+
+        _views.bottom.select()
+            .begin()
+                .marginTop(20)
             .save();
 
         _views.bottom.views.image.select()
