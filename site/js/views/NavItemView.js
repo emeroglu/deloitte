@@ -1,4 +1,4 @@
-$js.compile("AccountItemView", View, function($public, $private, $protected, $self) {
+$js.compile("NavItemView", View, function($public, $private, $protected, $self) {
 
     $private.field.icon = "";
     $public.void.set_icon = function(_icon) { $self.icon = _icon; };
@@ -6,7 +6,7 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
     $private.field.text = "";
     $public.void.set_text = function(_text) { $self.text = _text; };
 
-    $protected.override.func.on_key = function() { return "account-item-view"; };
+    $protected.override.func.on_key = function() { return "nav-item-view"; };
 
     $protected.override.void.on_construct = function(_views) {
 
@@ -32,7 +32,7 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
         _views.left.views.icon.set_side(40);
 
         _views.right.views.text.set_text($self.text);
-        _views.right.views.text.set_height(80);
+        _views.right.views.text.set_height(60);
         _views.right.views.text.set_size(13);
 
     };
@@ -42,12 +42,12 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
         _views.left.select()
             .begin()
                 .width(40)
-                .height(80)
+                .height(60)
             .save();
 
         _views.right.select()
             .begin()
-                .height(80)
+                .height(60)
             .save();
 
     };
