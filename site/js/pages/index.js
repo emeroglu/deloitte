@@ -6,20 +6,24 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
     $protected.override.void.on_construct = function(_views) {
 
-        _views.top = new RelativeLayout();
+        _views.top = new ContentLayout();
 
-        _views.store_selection = new RelativeLayout();
-        _views.search = new RelativeLayout();
-        _views.account = new RelativeLayout();
+        _views.compound = new ContentLayout();
 
-        _views.nav = new RelativeLayout();
+        _views.compound.views.store_selection = new RelativeLayout();
+        _views.compound.views.search = new RelativeLayout();
+        _views.compound.views.account = new RelativeLayout();
 
-        _views.headline = new RelativeLayout();
+        _views.nav = new ContentLayout();
 
-        _views.banner = new RelativeLayout();
+        _views.headline = new FullWideLayout();
 
-        _views.image = new RelativeLayout();
-        _views.text = new RelativeLayout();
+        _views.banner = new ContentLayout();
+
+        _views.bottom = new ContentLayout();
+
+        _views.bottom.views.image = new RelativeLayout();
+        _views.bottom.views.text = new RelativeLayout();
 
     };
 
@@ -27,9 +31,9 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.top.views.list = new HorizontalListView();
 
-        _views.store_selection.views.store_selector = new StoreSelectorView();
-        _views.search.views.search_view = new SearchView();
-        _views.account.views.list = new HorizontalListView();
+        _views.compound.views.store_selection.views.store_selector = new StoreSelectorView();
+        _views.compound.views.search.views.search_view = new SearchView();
+        _views.compound.views.account.views.list = new HorizontalListView();
 
         _views.nav.views.list = new HorizontalListView();
 
@@ -37,10 +41,10 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.banner.views.banner = new BannerView();
 
-        _views.image.views.image = new ImageView();
-        _views.text.views.header = new TextView();
-        _views.text.views.detail = new TextView();
-        _views.text.views.link = new TextView();
+        _views.bottom.views.image.views.image = new ImageView();
+        _views.bottom.views.text.views.header = new TextView();
+        _views.bottom.views.text.views.detail = new TextView();
+        _views.bottom.views.text.views.link = new TextView();
 
     };
 
@@ -62,7 +66,7 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
                 });
 
-        _views.account.views.list
+        _views.compound.views.account.views.list
             .begin()
                 .setSide("right")
                 .setItemPadding(10)
@@ -80,29 +84,67 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
                 });
 
+        _views.nav.views.list
+            .begin()
+                .setSide("left")
+                .setItemPadding(10)
+                .onModel(function() {
+                    return [
+                        { icon: "user", text: "Shop by Department" },
+                        { icon: "shopping-cart", text: "Shop by Room" },
+                        { icon: "shopping-cart", text: "Ideas & How-to" },
+                        { icon: "shopping-cart", text: "Installation Services" },
+                        { icon: "shopping-cart", text: "Value Centre" },
+                        { icon: "shopping-cart", text: "Weekly Flyer" }
+                    ];
+                })
+                .onGenerate(function(_view, _model) {
+
+                    _view.views.item = new NavItemView();
+                    _view.views.item.set_icon(_model.icon);
+                    _view.views.item.set_text(_model.text);
+
+                });
+
+        _views.headline.views.text.set_text("BUY ONLINE PICK UP IN-STORE Available for in-store products");
+        _views.headline.views.text.set_height(30);
+        _views.headline.views.text.set_size(11);
+        _views.headline.views.text.set_color("#FFFFFF");
+
+        _views.bottom.views.image.views.image.set_src("https://images.lowes.ca/images/articles/xx_l1_kitchen_main.jpg");
+
+        _views.bottom.views.text.views.header.set_text("fghghjkjh");
+        _views.bottom.views.text.views.header.set_height(30);
+        _views.bottom.views.text.views.header.set_size(11);
+        _views.bottom.views.text.views.header.set_color("#FFFFFF");
+
     };
 
     $protected.extension.void.on_style = function(_views) {
 
         _views.top.select()
             .begin()
-                .widthFull()
                 .height(60)
             .save();
 
-        _views.store_selection.select()
+        _views.compound.select()
+            .begin()
+                .height(60)
+            .save();
+
+        _views.compound.views.store_selection.select()
             .begin()
                 .widthPercent(30)
                 .height(80)
             .save();
 
-        _views.search.select()
+        _views.compound.views.search.select()
             .begin()
                 .widthPercent(40)
                 .height(80)
             .save();
 
-        _views.account.select()
+        _views.compound.views.account.select()
             .begin()
                 .widthPercent(30)
                 .height(80)
@@ -110,28 +152,22 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.nav.select()
             .begin()
-                .widthFull()
                 .height(60)
             .save();
 
         _views.headline.select()
             .begin()
-                .widthFull()
-                .height(40)
+                .height(30)
+                .backgroundColor("#b84b14")
             .save();
 
-        _views.banner.select()
-            .begin()
-                .widthFull()
-            .save();
-
-        _views.image.select()
+        _views.bottom.views.image.select()
             .begin()
                 .widthHalf()
                 .height(200)
             .save();
 
-        _views.text.select()
+        _views.bottom.views.text.select()
             .begin()
                 .widthHalf()
                 .height(200)
@@ -144,9 +180,15 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
                 .marginRight(20)
             .save();
 
-        _views.account.views.list.views.container.select()
+        _views.compound.views.account.views.list.views.container.select()
             .begin()
                 .marginRight(20)
+            .save();
+
+        _views.headline.views.text.select()
+            .begin()
+                .widthFromViewportWidth(100)
+                .left(0)
             .save();
 
     };
