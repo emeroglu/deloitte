@@ -36,49 +36,72 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
     $protected.virtual.void.on_construct = function(_views) { };
     $protected.virtual.void.on_flourish = function(_views) { };
     $protected.virtual.void.on_feed = function(_views) { };
-    $protected.virtual.void.on_self_style = function(_views) { $self.selection = "self"; $css.target = $view.page.get_tag(); };
     $protected.virtual.void.on_ready = function(_views, $ready) { $ready(); };
 
+    $public.virtual.void.apply = function() { };
 
-    // Styling
+
+    // Styling Once For Module (sneaky)
 
     $protected.virtual.void.on_style = function(_views) { $self.selection = "path"; $css.target = $view.module.get_tag();  };
-    $protected.virtual.void.on_view_style = function(_views) { $self.selection = "path"; $css.target = $view.page.get_tag();  };
+    
+    // Styling Once When Page is in view
+    
+    $protected.virtual.void.on_page_style = function(_views) { $self.selection = "path"; $css.target = $view.page.get_tag();  };
+
+    // Styling Once For Each View
+
+    $protected.virtual.void.on_self_style = function(_views) { $self.selection = "self"; $css.target = $view.page.get_tag(); };
+
+    // Styling Once When Viewport Changes
 
     $protected.virtual.void.on_wide_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port;  };
     $protected.virtual.void.on_medium_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port; };
     $protected.virtual.void.on_narrow_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port; };
     $protected.virtual.void.on_mobile_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port; };
 
+    // Styling as Viewport Updates
+
     $protected.virtual.void.on_wide_screen = function(_views) { $self.selection = "self_viewport"; $css.target = $view.page.get_tag() + "-" + $view.port; };
     $protected.virtual.void.on_medium_screen = function(_views) { $self.selection = "self_viewport"; $css.target = $view.page.get_tag() + "-" + $view.port; };
     $protected.virtual.void.on_narrow_screen = function(_views) { $self.selection = "self_viewport"; $css.target = $view.page.get_tag() + "-" + $view.port; };
     $protected.virtual.void.on_mobile_screen = function(_views) { $self.selection = "self_viewport"; $css.target = $view.page.get_tag() + "-" + $view.port; };
 
+    // Viewport Changes
+
     $protected.virtual.void.on_viewport_changed = function(_port, _views) { };
 
+    $protected.virtual.void.on_wide_viewport = function(_views) { };
+    $protected.virtual.void.on_medium_viewport = function(_views) { };
+    $protected.virtual.void.on_narrow_viewport = function(_views) { };
+    $protected.virtual.void.on_mobile_viewport = function(_views) { };
+
     $private.field.selection = "";
-    $public.func.select = function() { 
+    $public.func.select = function(_selection) { 
         
-        if ($self.selection == "self")
+        let selection = (_selection == null) ? $self.selection : _selection;
+
+        if (selection == "self")
             return $css.select($self.tag + "[d-id='" + $self.__id__ + "']"); 
-        else if ($self.selection == "self_viewport")
+        else if (selection == "self_viewport")
             return $css.select($self.tag + "[d-id='" + $self.__id__ + "'][d-viewport='" + $view.port + "']"); 
-        else if ($self.selection == "path")
+        else if (selection == "path")
             return $css.select($self.cascading_path()); 
-        else if ($self.selection == "path_viewport")
+        else if (selection == "path_viewport")
             return $css.select($self.cascading_path() + "[d-viewport='" + $view.port + "']"); 
 
     };
-    $public.func.selector = function() { 
+    $public.func.selector = function(_selection) { 
         
-        if ($self.selection == "self")
+        let selection = (_selection == null) ? $self.selection : _selection;
+
+        if (selection == "self")
             return $self.tag + "[d-id='" + $self.__id__ + "']"; 
-        else if ($self.selection == "self_viewport")
+        else if (selection == "self_viewport")
             return $self.tag + "[d-id='" + $self.__id__ + "'][d-viewport='" + $view.port + "']"; 
-        else if ($self.selection == "path")
+        else if (selection == "path")
             return $self.cascading_path(); 
-        else if ($self.selection == "path_viewport")
+        else if (selection == "path_viewport")
             return $self.cascading_path() + "[d-viewport='" + $view.port + "']"; 
 
     };
@@ -109,13 +132,21 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
             
             $self.on_viewport_changed($view.port, $self.views);
 
+            eval("$self.on_" + $view.port + "_viewport($self.views);");
+
+        });
+
+        $bcast.listen("viewport_new", function() { 
+
+            eval("$self.on_" + $view.port + "_style($self.views);");
+
         });
 
     };
 
     $private.void.listen_page = function() {
 
-        $bcast.listen("page_is_in_view", function() { $self.on_view_style($self.views); })
+        $bcast.listen("page_is_in_view", function() { $self.on_page_style($self.views); })
 
     };
 
@@ -221,16 +252,16 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         $self.tag = "d-" + $self.key;
 
         $self.on_construct($self.views);
+        $self.on_flourish($self.views);
+        $self.on_feed($self.views);
 
         $self.index = -1;
         $self.on_recurse_end = function() {
 
-            if ($view.get_purpose() == "viewport")
-                eval("$self.on_" + $view.port + "_style($self.views);");
-            else if ($view.get_purpose() == "initial")
+            if ($view.get_purpose() == "initial")
                 $self.on_style($self.views);
             else if ($view.get_purpose() == "page")
-                $self.on_view_style($self.views);
+                $self.on_page_style($self.views);
 
             $self.on_load();
 

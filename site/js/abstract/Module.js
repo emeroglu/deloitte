@@ -44,8 +44,6 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
             $self.generate_style_element($self.tag + "-" + $view.port);
 
-            $view.sneaky_load("viewport");
-
         });
 
     };

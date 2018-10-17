@@ -32,13 +32,13 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
         _views.left.views.icon.set_side(40);
 
         _views.right.views.text.set_text($self.text);
-        _views.right.views.text.set_height(60);
-        _views.right.views.text.set_size(13);
-        _views.right.views.text.set_weight(600);
+        _views.right.views.text.set_height("taller");
+        _views.right.views.text.set_size("smaller");
+        _views.right.views.text.set_weight("normal");
 
     };
 
-    $protected.extension.void.on_view_style = function(_views) {
+    $protected.extension.void.on_page_style = function(_views) {
 
         _views.left.select()
             .begin()

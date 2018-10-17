@@ -22,9 +22,6 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.bottom = new ContentLayout();
 
-        _views.bottom.views.image = new RelativeLayout();
-        _views.bottom.views.text = new RelativeLayout();
-
         _views.footer = new FullWideLayout();
 
     };
@@ -43,11 +40,8 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.banner.views.banner = new BannerView();
 
-        _views.bottom.views.image.views.image = new ReflectiveImageView();
-        _views.bottom.views.text.views.header = new TextView();
-        _views.bottom.views.text.views.detail = new TextView();
-        _views.bottom.views.text.views.link = new TextView();
-
+        _views.bottom.views.product = new ProductView();
+    
     };
 
     $protected.override.void.on_feed = function(_views) {
@@ -55,7 +49,7 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
         _views.top.views.list
             .begin()
                 .setSide("right")
-                .setItemPadding(10)
+                .setItemPadding(5)
                 .onModel(function() {
                     return ["Tools & Vehicles", "Credit Services", "Pro Services", "Order Status", "Customer Support", "Français"];
                 })
@@ -63,15 +57,15 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
                     _view.views.text = new ReflectiveTextView();
                     _view.views.text.set_text(_model);
-                    _view.views.text.set_height(60);
-                    _view.views.text.set_size(12);
+                    _view.views.text.set_height("tall");
+                    _view.views.text.set_size("smallest");
 
                 });
 
         _views.compound.views.account.views.list
             .begin()
                 .setSide("right")
-                .setItemPadding(10)
+                .setItemPadding(5)
                 .onModel(function() {
                     return [
                         { icon: "user", text: "My Account" },
@@ -89,15 +83,15 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
         _views.nav.views.list
             .begin()
                 .setSide("left")
-                .setItemPadding(10)
+                .setItemPadding(5)
                 .onModel(function() {
                     return [
-                        { icon: "user", text: "Shop by Department" },
-                        { icon: "shopping-cart", text: "Shop by Room" },
-                        { icon: "shopping-cart", text: "Ideas & How-to" },
-                        { icon: "shopping-cart", text: "Installation Services" },
-                        { icon: "shopping-cart", text: "Value Centre" },
-                        { icon: "shopping-cart", text: "Weekly Flyer" }
+                        { icon: "bars", text: "Shop by Department" },
+                        { icon: "couch", text: "Shop by Room" },
+                        { icon: "lightbulb", text: "Ideas & How-to" },
+                        { icon: "wrench", text: "Installation Services" },
+                        { icon: "tag", text: "Value Centre" },
+                        { icon: "file", text: "Weekly Flyer" }
                     ];
                 })
                 .onGenerate(function(_view, _model) {
@@ -109,31 +103,14 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
                 });
 
         _views.headline.views.text.set_text("BUY ONLINE PICK UP IN-STORE Available for in-store products");
-        _views.headline.views.text.set_height(25);
-        _views.headline.views.text.set_size(11);
-        _views.headline.views.text.set_color("#FFFFFF");
+        _views.headline.views.text.set_height("short");
+        _views.headline.views.text.set_size("smallest");
+        _views.headline.views.text.set_color("white");
 
-        _views.bottom.views.image.views.image.set_src("/Image");
-
-        _views.bottom.views.text.views.header.set_text("SAVE ON LIGHTING EVENT");
-        _views.bottom.views.text.views.header.set_align("left");
-        _views.bottom.views.text.views.header.set_height(40);
-        _views.bottom.views.text.views.header.set_size(30);
-        _views.bottom.views.text.views.header.set_weight(800);
-        _views.bottom.views.text.views.header.set_color("#000000");
-
-        _views.bottom.views.text.views.detail.set_text("Brighten up your home with great savings on lighting");
-        _views.bottom.views.text.views.detail.set_align("left");
-        _views.bottom.views.text.views.detail.set_height(40);
-        _views.bottom.views.text.views.detail.set_size(14);
-        _views.bottom.views.text.views.detail.set_weight(600);
-
-        _views.bottom.views.text.views.link.set_text("Shop All");
-        _views.bottom.views.text.views.link.set_align("left");
-        _views.bottom.views.text.views.link.set_height(40);
-        _views.bottom.views.text.views.link.set_size(16);
-        _views.bottom.views.text.views.link.set_weight(800);
-        _views.bottom.views.text.views.link.set_color("#000000");
+        _views.bottom.views.product.set_image("/Image");
+        _views.bottom.views.product.set_title("SAVE ON LIGHTING EVENT");
+        _views.bottom.views.product.set_text("Brighten up your home with great savings on lighting");
+        _views.bottom.views.product.set_link("Shop All");
 
     };
 
@@ -141,7 +118,8 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.top.select()
             .begin()
-                .height(60)
+                .height(40)
+                .marginTop(20)
             .save();
 
         _views.compound.select()
@@ -181,34 +159,6 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
         _views.bottom.select()
             .begin()
                 .marginTop(20)
-            .save();
-
-        _views.bottom.views.image.select()
-            .begin()
-                .widthHalf()
-                .height(200)
-            .save();
-
-        _views.bottom.views.text.select()
-            .begin()
-                .widthCropFromHalf(20)
-                .height(200)
-                .marginLeft(20)
-            .save();
-
-        _views.bottom.views.text.views.header.select()
-            .begin()
-                .top(20)
-            .save();
-            
-        _views.bottom.views.text.views.detail.select()
-            .begin()
-                .top(60)
-            .save();
-
-        _views.bottom.views.text.views.link.select()
-            .begin()
-                .top(100)
             .save();
 
         _views.footer.select()

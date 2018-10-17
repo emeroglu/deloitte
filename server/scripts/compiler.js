@@ -87,6 +87,7 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
         $self.queue.push("../site/js/views/IconView.js");
         $self.queue.push("../site/js/views/ImageView.js");
         $self.queue.push("../site/js/views/NavItemView.js");
+        $self.queue.push("../site/js/views/ProductView.js");
         $self.queue.push("../site/js/views/RelativeLayout.js");
         $self.queue.push("../site/js/views/ReflectiveImageView.js");
         $self.queue.push("../site/js/views/ReflectiveTextView.js");
