@@ -33,6 +33,7 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
 
         _views.right.views.text.set_text($self.text);
         _views.right.views.text.set_height("taller");
+        _views.right.views.text.set_line_height("taller");
         _views.right.views.text.set_size("smaller");
         _views.right.views.text.set_weight("normal");
 

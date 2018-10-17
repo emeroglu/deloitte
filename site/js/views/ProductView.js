@@ -39,6 +39,7 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
         _views.right.views.title.set_text($self.title);
         _views.right.views.title.set_align("left");
         _views.right.views.title.set_height("tall");
+        _views.right.views.title.set_line_height("tall");
         _views.right.views.title.set_size("larger");
         _views.right.views.title.set_weight("bold");
         _views.right.views.title.set_color("black");
@@ -46,12 +47,14 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
         _views.right.views.text.set_text($self.text);
         _views.right.views.text.set_align("left");
         _views.right.views.text.set_height("tall");
+        _views.right.views.text.set_line_height("tall");
         _views.right.views.text.set_size("smaller");
         _views.right.views.text.set_weight("normal");
 
         _views.right.views.link.set_text($self.link);
         _views.right.views.link.set_align("left");
         _views.right.views.link.set_height("tall");
+        _views.right.views.link.set_line_height("tall");
         _views.right.views.link.set_size("small");
         _views.right.views.link.set_weight("bold");
         _views.right.views.link.set_color("black");
@@ -65,10 +68,6 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
                 .relativeLeft()
                 .widthFull()
             .save();
-
-    };
-
-    $protected.extension.void.on_self_style = function(_views) {
 
         _views.left.select()
             .begin()
@@ -104,14 +103,17 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
     $protected.override.void.on_wide_viewport = function(_views) {
 
         _views.right.views.title.set_height("tall");
+        _views.right.views.title.set_line_height("tall");
         _views.right.views.title.set_size("larger");
         _views.right.views.title.apply();
 
         _views.right.views.text.set_height("tall");
+        _views.right.views.text.set_line_height("tall");
         _views.right.views.text.set_size("smaller");
         _views.right.views.text.apply();
 
         _views.right.views.link.set_height("tall");
+        _views.right.views.link.set_line_height("tall");
         _views.right.views.link.set_size("small");
         _views.right.views.link.apply();
 
@@ -120,14 +122,17 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
     $protected.override.void.on_medium_viewport = function(_views) {
 
         _views.right.views.title.set_height("tall");
+        _views.right.views.title.set_line_height("tall");
         _views.right.views.title.set_size("large");
         _views.right.views.title.apply();
 
         _views.right.views.text.set_height("medium");
+        _views.right.views.text.set_line_height("medium");
         _views.right.views.text.set_size("smaller");
         _views.right.views.text.apply();
 
         _views.right.views.link.set_height("medium");
+        _views.right.views.link.set_line_height("medium");
         _views.right.views.link.set_size("small");
         _views.right.views.link.apply();
 
@@ -136,14 +141,17 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
     $protected.override.void.on_narrow_viewport = function(_views) {
 
         _views.right.views.title.set_height("medium");
+        _views.right.views.title.set_line_height("medium");
         _views.right.views.title.set_size("medium");
         _views.right.views.title.apply();
 
         _views.right.views.text.set_height("short");
+        _views.right.views.text.set_line_height("short");
         _views.right.views.text.set_size("smallest");
         _views.right.views.text.apply();
 
         _views.right.views.link.set_height("short");
+        _views.right.views.link.set_line_height("short");
         _views.right.views.link.set_size("smaller");
         _views.right.views.link.apply();
 

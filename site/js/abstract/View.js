@@ -76,7 +76,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
     $protected.virtual.void.on_narrow_viewport = function(_views) { };
     $protected.virtual.void.on_mobile_viewport = function(_views) { };
 
-    $private.field.selection = "";
+    $private.field.selection = "path";
     $public.func.select = function(_selection) { 
         
         let selection = (_selection == null) ? $self.selection : _selection;
@@ -108,7 +108,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     $private.func.cascading_path = function() {
 
-        if ($self.parent.cascading_path == undefined)
+        if ($self.parent == undefined || $self.parent.cascading_path == undefined)
             return $self.tag;
         else {
             if ($self.name == "")
@@ -258,10 +258,14 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         $self.index = -1;
         $self.on_recurse_end = function() {
 
-            if ($view.get_purpose() == "initial")
-                $self.on_style($self.views);
-            else if ($view.get_purpose() == "page")
-                $self.on_page_style($self.views);
+            if (!$view.loaded($self.__schema__)) {
+
+                if ($view.get_purpose() == "initial")
+                    $self.on_style($self.views);
+                else if ($view.get_purpose() == "page")
+                    $self.on_page_style($self.views);
+
+            }
 
             $self.on_load();
 

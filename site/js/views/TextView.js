@@ -9,8 +9,11 @@ $js.compile("TextView", View, function($public, $private, $protected, $self) {
     $private.field.weight = "normal";
     $public.void.set_weight = function(_weight) { $self.weight = _weight; };
 
-    $private.field.height = "medium";
+    $private.field.height = "auto";
     $public.void.set_height = function(_height) { $self.height = _height; };
+
+    $private.field.line_height = "auto";
+    $public.void.set_line_height = function(_line_height) { $self.line_height = _line_height; };
 
     $private.field.size = "medium";
     $public.void.set_size = function(_size) { $self.size = _size; };
@@ -26,6 +29,7 @@ $js.compile("TextView", View, function($public, $private, $protected, $self) {
         $self.element.setAttribute("d-size", $self.size);
         $self.element.setAttribute("d-color", $self.color);
         $self.element.setAttribute("d-height", $self.height);
+        $self.element.setAttribute("d-line-height", $self.line_height);
 
     };
 
@@ -40,6 +44,7 @@ $js.compile("TextView", View, function($public, $private, $protected, $self) {
         e.setAttribute("d-size", $self.size);
         e.setAttribute("d-color", $self.color);
         e.setAttribute("d-height", $self.height);
+        e.setAttribute("d-line-height", $self.line_height);
         return e;
 
     };
@@ -129,32 +134,67 @@ $js.compile("TextView", View, function($public, $private, $protected, $self) {
 
         $css.select($self.tag + "[d-height='shorter']")
             .begin()
-                .textHeight(20)
+                .height(20)
             .save();
 
         $css.select($self.tag + "[d-height='short']")
             .begin()
-                .textHeight(25)
+                .height(25)
             .save();
 
         $css.select($self.tag + "[d-height='medium']")
             .begin()
-                .textHeight(30)
+                .height(30)
             .save();
 
         $css.select($self.tag + "[d-height='tall']")
             .begin()
-                .textHeight(40)
+                .height(40)
             .save();
 
         $css.select($self.tag + "[d-height='taller']")
             .begin()
-                .textHeight(60)
+                .height(60)
             .save();
 
         $css.select($self.tag + "[d-height='tallest']")
             .begin()
-                .textHeight(80)
+                .height(80)
+            .save();
+
+        $css.select($self.tag + "[d-height='auto']")
+            .begin()
+                .heightPlain("auto")
+            .save();
+
+        $css.select($self.tag + "[d-line-height='shorter']")
+            .begin()
+                .textLineHeight(20)
+            .save();
+
+        $css.select($self.tag + "[d-line-height='short']")
+            .begin()
+                .textLineHeight(25)
+            .save();
+
+        $css.select($self.tag + "[d-line-height='medium']")
+            .begin()
+                .textLineHeight(30)
+            .save();
+
+        $css.select($self.tag + "[d-line-height='tall']")
+            .begin()
+                .textLineHeight(40)
+            .save();
+
+        $css.select($self.tag + "[d-line-height='taller']")
+            .begin()
+                .textLineHeight(60)
+            .save();
+
+        $css.select($self.tag + "[d-line-height='tallest']")
+            .begin()
+                .textLineHeight(80)
             .save();
 
     };

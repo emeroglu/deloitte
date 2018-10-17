@@ -104,6 +104,7 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
         _views.headline.views.text.set_text("BUY ONLINE PICK UP IN-STORE Available for in-store products");
         _views.headline.views.text.set_height("short");
+        _views.headline.views.text.set_line_height("short");
         _views.headline.views.text.set_size("smallest");
         _views.headline.views.text.set_color("white");
 

@@ -10,7 +10,27 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
     $public.func.get_purpose = function() { return $self.purpose; };
 
     $private.field.index = 0;
-    $private.field.types = [AbsoluteLayout, AccountItemView, BannerView, ContentLayout, FullWideLayout, HorizontalListView, IconView, ImageView, NavItemView, ListItemView, ListView, RelativeLayout, ReflectiveImageView, ReflectiveTextView, SearchView, StoreSelectorView, TextView];
+    $private.field.types = [
+        AbsoluteLayout, 
+        AccountItemView, 
+        BannerView, 
+        ContentLayout, 
+        FullWideLayout, 
+        HorizontalListView, 
+        IconView, 
+        ImageView, 
+        NavItemView, 
+        ListItemView, 
+        ListView, 
+        ProductView, 
+        RelativeLayout, 
+        ReflectiveImageView, 
+        ReflectiveTextView, 
+        SearchView, 
+        StoreSelectorView, 
+        TextView
+    ];
+    $private.field.loadeds = [];
     $private.void.recurse = function() {
 
         $self.index++;
@@ -26,7 +46,10 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
             view
                 .begin()
                     .setParent($self.module)
-                    .onLoad($self.recurse)
+                    .onLoad(function() {
+                        $self.loadeds.push(type.name);
+                        $self.recurse();
+                    })
                 .sneaky_load();
 
         }
@@ -37,9 +60,19 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
 
         $self.purpose = _purpose;
 
+        $self.loadeds = [];
+
         $self.index = -1;
         $self.recurse();
 
+    };
+
+    $public.func.loaded = function(name) {
+        for (let index in $self.loadeds) {
+            if ($self.loadeds[index] == name)
+                return true;
+        }
+        return false;
     };
 
 });
