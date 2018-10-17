@@ -59,39 +59,13 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
         $bcast.listen("viewport_changed", function() { 
 
             $self.element.setAttribute("d-viewport", $view.port);
-            
-            if ($view.port == "mobile") {
-
-                $css.select($self.tag)
-                    .begin()
-                        .widthFull()
-                    .commit();
-
-            } else {
-
-                let w;
-
-                if ($view.port == "wide")
-                    w = 1200;
-                else if ($view.port == "medium")
-                    w = 992;
-                else if ($view.port == "narrow")
-                    w = 768;
-
-                $css.select($self.tag)
-                    .begin()
-                        .widthCentered(w)
-                    .commit();
-
-            }
-
-            
 
         });
 
         $css.select($self.tag)
             .begin()
                 .absolute()
+                .widthFull()
                 .heightFull()
                 .backgroundColor("white")
                 .mask()

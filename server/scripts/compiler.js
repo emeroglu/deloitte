@@ -81,10 +81,14 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
         $self.queue.push("../site/js/views/AbsoluteLayout.js");
         $self.queue.push("../site/js/views/AccountItemView.js");
         $self.queue.push("../site/js/views/BannerView.js");
+        $self.queue.push("../site/js/views/ContentLayout.js");
+        $self.queue.push("../site/js/views/FullWideLayout.js");
         $self.queue.push("../site/js/views/HorizontalListView.js");
         $self.queue.push("../site/js/views/IconView.js");
         $self.queue.push("../site/js/views/ImageView.js");
+        $self.queue.push("../site/js/views/NavItemView.js");
         $self.queue.push("../site/js/views/RelativeLayout.js");
+        $self.queue.push("../site/js/views/ReflectiveImageView.js");
         $self.queue.push("../site/js/views/ReflectiveTextView.js");
         $self.queue.push("../site/js/views/SearchView.js");
         $self.queue.push("../site/js/views/StoreSelectorView.js");
