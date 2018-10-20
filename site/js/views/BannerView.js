@@ -55,9 +55,9 @@ $js.compile("BannerView", View, function($public, $private, $protected, $self) {
 
     };
 
-    $protected.extension.void.on_page_style = function(_views) {
+    $protected.extension.void.on_style = function(_views) {
 
-        $self.select()
+        $self.select_tag()
             .begin()
                 .relativeLeft()
                 .widthCropFromFull(20)
@@ -65,7 +65,7 @@ $js.compile("BannerView", View, function($public, $private, $protected, $self) {
                 .marginTop(10)
             .save();
 
-        _views.action.select()
+        _views.action.select_path()
             .begin()
                 .width(290)
                 .height(120)
@@ -73,7 +73,7 @@ $js.compile("BannerView", View, function($public, $private, $protected, $self) {
                 .bottom(20)
             .save();
 
-        _views.action.views.button.select()
+        _views.action.views.button.select_path()
             .begin()
                 .widthFull()
                 .backgroundColor("#f2812f")
@@ -82,7 +82,7 @@ $js.compile("BannerView", View, function($public, $private, $protected, $self) {
                 .bottom(0)
             .save();
 
-        _views.action_m.select()
+        _views.action_m.select_path()
             .begin()
                 .none()
                 .widthFull()
@@ -93,12 +93,12 @@ $js.compile("BannerView", View, function($public, $private, $protected, $self) {
 
     $protected.extension.void.on_mobile_style = function(_views) {
 
-        _views.action.select("path_viewport")
+        _views.action.select_path_viewport()
             .begin()
                 .none()
             .save();
 
-        _views.action_m.select("path_viewport")
+        _views.action_m.select_path_viewport()
             .begin()
                 .disp()
             .save();

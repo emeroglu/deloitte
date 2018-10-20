@@ -43,7 +43,7 @@ $js.compile("IconView", View, function($public, $private, $protected, $self) {
 
     $protected.extension.void.on_style = function(_views) {
 
-        $self.select()
+        $self.select_tag()
             .begin()
                 .absolute()
                 .sideFull()
@@ -59,7 +59,7 @@ $js.compile("IconView", View, function($public, $private, $protected, $self) {
 
     $protected.extension.void.on_self_style = function(_views) {
 
-        $css.select($self.tag + "[d-id='" + $self.__id__ + "'] i")
+        $css.select($self.selector("self") + " i")
             .begin()
                 .textSize(($self.size == 0) ? 22 : $self.size)
                 .textColor(($self.color == "") ? "#000000" : $self.color)

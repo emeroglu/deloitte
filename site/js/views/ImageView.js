@@ -29,36 +29,18 @@ $js.compile("ImageView", View, function($public, $private, $protected, $self) {
 
     $protected.extension.void.on_style = function(_views) {
 
-        if ($self.tag == "d-image-view") {
+        $self.select_tag()
+            .begin()
+                .absolute()
+                .sideFull()
+                .mask()
+            .save();
 
-            $self.select()
-                .begin()
-                    .absolute()
-                    .sideFull()
-                    .mask()
-                .save();
-
-            $css.select($self.tag + " img")
-                .begin()
-                    .absolute()
-                    .sideFull()
-                .save();
-
-        } else if ($self.tag == "d-reflective-image-view") {
-
-            $self.select()
-                .begin()
-                    .relativeLeft()
-                    .widthFull()
-                .save();
-
-            $css.select($self.tag + " img")
-                .begin()
-                    .relativeLeft()
-                    .widthFull()
-                .save();
-
-        }
+        $css.select($self.tag + " img")
+            .begin()
+                .absolute()
+                .sideFull()
+            .save();
 
     };
 

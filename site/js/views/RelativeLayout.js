@@ -4,7 +4,7 @@ $js.compile("RelativeLayout", View, function($public, $private, $protected, $sel
 
     $protected.extension.void.on_style = function(_views) {
 
-        $self.select()
+        $self.select_tag()
             .begin()
                 .relativeLeft()
             .save();

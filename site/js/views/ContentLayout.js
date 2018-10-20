@@ -16,7 +16,7 @@ $js.compile("ContentLayout", View, function($public, $private, $protected, $self
 
     $protected.extension.void.on_style = function(_views) {
 
-        $self.select()
+        $self.select_tag()
             .begin()
                 .relativeLeft()
             .save();
@@ -25,7 +25,7 @@ $js.compile("ContentLayout", View, function($public, $private, $protected, $self
 
     $protected.extension.void.on_wide_style = function(_views) {
 
-        $self.select()
+        $self.select_tag_viewport()
             .begin()
                 .widthCentered(1200)
             .save();
@@ -34,7 +34,7 @@ $js.compile("ContentLayout", View, function($public, $private, $protected, $self
 
     $protected.extension.void.on_medium_style = function(_views) {
 
-        $self.select()
+        $self.select_tag_viewport()
             .begin()
                 .widthCentered(992)
             .save();
@@ -43,7 +43,7 @@ $js.compile("ContentLayout", View, function($public, $private, $protected, $self
 
     $protected.extension.void.on_narrow_style = function(_views) {
 
-        $self.select()
+        $self.select_tag_viewport()
             .begin()
                 .widthCentered(768)
             .save();
@@ -52,7 +52,7 @@ $js.compile("ContentLayout", View, function($public, $private, $protected, $self
 
     $protected.extension.void.on_mobile_style = function(_views) {
 
-        $self.select()
+        $self.select_tag_viewport()
             .begin()
                 .widthFull()
             .save();

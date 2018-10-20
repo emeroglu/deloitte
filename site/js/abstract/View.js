@@ -43,29 +43,29 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     // Styling Once For Module (sneaky)
 
-    $protected.virtual.void.on_style = function(_views) { $self.selection = "tag"; $css.target = $view.module.get_tag();  };
+    $protected.virtual.void.on_style = function(_views) { $css.target = $view.module.get_tag();  };
     
     // Styling Once When Page is in view
     
-    $protected.virtual.void.on_page_style = function(_views) { $self.selection = "path"; $css.target = $view.page.get_tag(); };
+    $protected.virtual.void.on_page_style = function(_views) { $css.target = $view.page.get_tag(); };
 
     // Styling Once For Each View
 
-    $protected.virtual.void.on_self_style = function(_views) { $self.selection = "self"; $css.target = $view.page.get_tag(); };
+    $protected.virtual.void.on_self_style = function(_views) { $css.target = $view.page.get_tag(); };
 
     // Styling Once When Viewport Changes
 
-    $protected.virtual.void.on_wide_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port;  };
-    $protected.virtual.void.on_medium_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port; };
-    $protected.virtual.void.on_narrow_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port; };
-    $protected.virtual.void.on_mobile_style = function(_views) { $self.selection = "path_viewport"; $css.target = $view.module.get_tag() + "-" + $view.port; };
+    $protected.virtual.void.on_wide_style = function(_views) { $css.target = $view.module.get_tag() + "-" + $view.port;  };
+    $protected.virtual.void.on_medium_style = function(_views) { $css.target = $view.module.get_tag() + "-" + $view.port; };
+    $protected.virtual.void.on_narrow_style = function(_views) { $css.target = $view.module.get_tag() + "-" + $view.port; };
+    $protected.virtual.void.on_mobile_style = function(_views) { $css.target = $view.module.get_tag() + "-" + $view.port; };
 
     // Styling as Viewport Updates
 
-    $protected.virtual.void.on_wide_screen = function(_views) { $self.selection = "self_viewport"; $css.target = $view.page.get_tag() + "-" + $view.port; };
-    $protected.virtual.void.on_medium_screen = function(_views) { $self.selection = "self_viewport"; $css.target = $view.page.get_tag() + "-" + $view.port; };
-    $protected.virtual.void.on_narrow_screen = function(_views) { $self.selection = "self_viewport"; $css.target = $view.page.get_tag() + "-" + $view.port; };
-    $protected.virtual.void.on_mobile_screen = function(_views) { $self.selection = "self_viewport"; $css.target = $view.page.get_tag() + "-" + $view.port; };
+    $protected.virtual.void.on_wide_screen = function(_views) { $css.target = $view.page.get_tag() + "-" + $view.port; };
+    $protected.virtual.void.on_medium_screen = function(_views) { $css.target = $view.page.get_tag() + "-" + $view.port; };
+    $protected.virtual.void.on_narrow_screen = function(_views) { $css.target = $view.page.get_tag() + "-" + $view.port; };
+    $protected.virtual.void.on_mobile_screen = function(_views) { $css.target = $view.page.get_tag() + "-" + $view.port; };
 
     // Viewport Changes
 
@@ -76,27 +76,26 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
     $protected.virtual.void.on_narrow_viewport = function(_views) { };
     $protected.virtual.void.on_mobile_viewport = function(_views) { };
 
-    $private.field.selection = "";
-    $public.func.select = function(_selection) { 
-        
-        let selection = (_selection == null) ? $self.selection : _selection;
+    $public.func.select = function(_selection) { return $css.select($self.selector("self")); };
+    $public.func.select_tag = function(_selection) { return $css.select($self.selector("tag")); };
+    $public.func.select_tag_viewport = function(_selection) { return $css.select($self.selector("tag_viewport")); };
+    $public.func.select_viewport = function(_selection) { return $css.select($self.selector("self_viewport")); };
+    $public.func.select_path = function(_selection) { return $css.select($self.selector("path")); };
+    $public.func.select_path_viewport = function(_selection) { return $css.select($self.selector("path_viewport")); };
 
-        return $css.select($self.selector(selection));
-
-    };
     $public.func.selector = function(_selection) { 
 
-        let selection = (_selection == null) ? $self.selection : _selection;
-
-        if (selection == "tag")
+        if (_selection == "tag")
             return $self.tag;
-        else if (selection == "self")
+        else if (_selection == "tag_viewport")
+            return $self.tag + "[d-viewport='" + $view.port + "']"; 
+        else if (_selection == "self")
             return $self.tag + "[d-id='" + $self.__id__ + "']"; 
-        else if (selection == "self_viewport")
+        else if (_selection == "self_viewport")
             return $self.tag + "[d-id='" + $self.__id__ + "'][d-viewport='" + $view.port + "']"; 
-        else if (selection == "path")
+        else if (_selection == "path")
             return $self.cascading_path(); 
-        else if (selection == "path_viewport")
+        else if (_selection == "path_viewport")
             return $self.cascading_path() + "[d-viewport='" + $view.port + "']"; 
 
     };
@@ -144,6 +143,7 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         $bcast.listen("page_is_in_view", function() { $self.on_page_style($self.views); })
 
     };
+
 
     // Recurse
 

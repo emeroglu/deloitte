@@ -6,9 +6,6 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
     $public.field.module = {};
     $public.field.page = {};
 
-    $private.field.purpose = "";
-    $public.func.get_purpose = function() { return $self.purpose; };
-
     $private.field.index = 0;
     $private.field.types = [
         AbsoluteLayout, 
@@ -53,7 +50,6 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
                     .begin()
                         .setParent($self.module)
                         .onLoad(function() {
-                            $view.loaded(type.name);
                             $self.recurse();
                         })
                     .sneaky_load();
@@ -65,8 +61,6 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
     };
 
     $public.void.sneaky_load = function(_purpose) {
-
-        $self.purpose = _purpose;
 
         $self.loadeds = [];
 

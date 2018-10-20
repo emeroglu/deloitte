@@ -41,13 +41,13 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
 
     $protected.extension.void.on_page_style = function(_views) {
 
-        _views.left.select()
+        _views.left.select_path()
             .begin()
                 .width(40)
                 .height(60)
             .save();
 
-        _views.right.select()
+        _views.right.select_path()
             .begin()
                 .height(60)
             .save();

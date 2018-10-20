@@ -14,7 +14,7 @@ $js.compile("ListView", View, function($public, $private, $protected, $self) {
 
     $protected.extension.void.on_style = function(_views) {
 
-        $self.select()
+        $self.select_tag()
             .begin()
                 .absolute()
                 .sideFull()

@@ -4,7 +4,7 @@ $js.compile("ReflectiveTextView", TextView, function($public, $private, $protect
 
     $protected.extension.void.on_style = function(_views) {
 
-        $self.select()
+        $self.select_tag()
             .begin()
                 .relativeLeft()
             .save();

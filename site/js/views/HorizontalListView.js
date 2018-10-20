@@ -31,14 +31,14 @@ $js.compile("HorizontalListView", ListView, function($public, $private, $protect
 
     $protected.extension.void.on_style = function(_views) {
 
-        _views.container.select()
+        _views.container.select_path()
             .begin()
                 .relative()
                 .heightFull()
                 .horizontalScroll()
             .save();
 
-        $css.select(_views.container.selector() + " d-list-item-view")
+        $css.select(_views.container.selector("path") + " d-list-item-view")
             .begin()
                 .relativeLeft()
                 .heightFull()

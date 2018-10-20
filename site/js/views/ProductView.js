@@ -17,8 +17,10 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
     $protected.override.void.on_construct = function(_views) {
 
         _views.left = new RelativeLayout();
+        _views.left.set_name("left");
         
         _views.right = new RelativeLayout();
+        _views.right.set_name("right");
 
     };
 
@@ -61,21 +63,21 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
 
     };
 
-    $protected.extension.void.on_self_style = function(_views) {
+    $protected.extension.void.on_style = function(_views) {
 
-        $self.select()
+        $self.select_tag()
             .begin()
                 .relativeLeft()
                 .widthCropFromFull(20)
                 .marginHorizontal(10)
             .save();
 
-        _views.left.select()
+        _views.left.select_path()
             .begin()
                 .widthHalf()
             .save();
 
-        _views.right.select()
+        _views.right.select_path()
             .begin()
                 .widthCropFromHalf(20)
                 .marginLeft(20)
@@ -86,12 +88,12 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
 
     $protected.extension.void.on_mobile_style = function(_views) {
 
-        _views.left.select("self_viewport")
+        _views.left.select_path_viewport()
             .begin()
                 .widthFull()
             .save();
 
-        _views.right.select("self_viewport")
+        _views.right.select_path_viewport()
             .begin()
                 .widthFull()
                 .marginLeft(0)
