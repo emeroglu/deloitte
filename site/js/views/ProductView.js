@@ -66,7 +66,8 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
         $self.select()
             .begin()
                 .relativeLeft()
-                .widthFull()
+                .widthCropFromFull(20)
+                .marginHorizontal(10)
             .save();
 
         _views.left.select()
@@ -87,14 +88,13 @@ $js.compile("ProductView", View, function($public, $private, $protected, $self) 
 
         _views.left.select("self_viewport")
             .begin()
-                .widthCropFromFull(20)
-                .marginHorizontal(10)
+                .widthFull()
             .save();
 
         _views.right.select("self_viewport")
             .begin()
-                .widthCropFromFull(20)
-                .marginHorizontal(10)
+                .widthFull()
+                .marginLeft(0)
                 .marginTop(20)
             .save();
 

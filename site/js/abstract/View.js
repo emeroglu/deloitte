@@ -43,11 +43,11 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
     // Styling Once For Module (sneaky)
 
-    $protected.virtual.void.on_style = function(_views) { $self.selection = "path"; $css.target = $view.module.get_tag();  };
+    $protected.virtual.void.on_style = function(_views) { $self.selection = "tag"; $css.target = $view.module.get_tag();  };
     
     // Styling Once When Page is in view
     
-    $protected.virtual.void.on_page_style = function(_views) { $self.selection = "path"; $css.target = $view.page.get_tag();  };
+    $protected.virtual.void.on_page_style = function(_views) { $self.selection = "path"; $css.target = $view.page.get_tag(); };
 
     // Styling Once For Each View
 
@@ -76,26 +76,21 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
     $protected.virtual.void.on_narrow_viewport = function(_views) { };
     $protected.virtual.void.on_mobile_viewport = function(_views) { };
 
-    $private.field.selection = "path";
+    $private.field.selection = "";
     $public.func.select = function(_selection) { 
         
         let selection = (_selection == null) ? $self.selection : _selection;
 
-        if (selection == "self")
-            return $css.select($self.tag + "[d-id='" + $self.__id__ + "']"); 
-        else if (selection == "self_viewport")
-            return $css.select($self.tag + "[d-id='" + $self.__id__ + "'][d-viewport='" + $view.port + "']"); 
-        else if (selection == "path")
-            return $css.select($self.cascading_path()); 
-        else if (selection == "path_viewport")
-            return $css.select($self.cascading_path() + "[d-viewport='" + $view.port + "']"); 
+        return $css.select($self.selector(selection));
 
     };
     $public.func.selector = function(_selection) { 
-        
+
         let selection = (_selection == null) ? $self.selection : _selection;
 
-        if (selection == "self")
+        if (selection == "tag")
+            return $self.tag;
+        else if (selection == "self")
             return $self.tag + "[d-id='" + $self.__id__ + "']"; 
         else if (selection == "self_viewport")
             return $self.tag + "[d-id='" + $self.__id__ + "'][d-viewport='" + $view.port + "']"; 
@@ -258,14 +253,11 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         $self.index = -1;
         $self.on_recurse_end = function() {
 
-            if (!$view.loaded($self.__schema__)) {
-
-                if ($view.get_purpose() == "initial")
-                    $self.on_style($self.views);
-                else if ($view.get_purpose() == "page")
-                    $self.on_page_style($self.views);
-
-            }
+            if ($view.get_purpose() == "initial") {
+                $view.loaded($self.__schema__);
+                $self.on_style($self.views);
+            } else if ($view.get_purpose() == "page")
+                $self.on_page_style($self.views);
 
             $self.on_load();
 

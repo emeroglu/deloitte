@@ -22,7 +22,7 @@ $global.$js = function() {
         instance.__public__ = { __virtuals__: {}, __extensions__: {} };
         instance.__private__ = {};
         instance.__protected__ = { __virtuals__: {}, __extensions__: {} };
-        instance.__self__ = {};
+        instance.__self__ = { __schema__: instance.__schema__ };
         instance.__self__.__id__ = $js.id;
 
         instance.__public_schema__ = { field: {}, func: {}, void: {}, delegate: {}, virtual: { func: {}, void: {} }, override: { func: {}, void: {} }, extension: { func: {}, void: {} } };

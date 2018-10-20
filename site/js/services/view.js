@@ -40,17 +40,25 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
         } else {
 
             let type = $self.types[$self.index];
-            let view;
-            eval("view = new " + type.name + "();");
+            let is_loaded = $self.is_loaded(type.name);
 
-            view
-                .begin()
-                    .setParent($self.module)
-                    .onLoad(function() {
-                        $self.loadeds.push(type.name);
-                        $self.recurse();
-                    })
-                .sneaky_load();
+            if (is_loaded)
+                $self.recurse();
+            else {
+
+                let view;
+                eval("view = new " + type.name + "();");
+
+                view
+                    .begin()
+                        .setParent($self.module)
+                        .onLoad(function() {
+                            $view.loaded(type.name);
+                            $self.recurse();
+                        })
+                    .sneaky_load();
+
+            }
 
         }
 
@@ -67,12 +75,18 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
 
     };
 
-    $public.func.loaded = function(name) {
+    $public.func.is_loaded = function(name) {
         for (let index in $self.loadeds) {
             if ($self.loadeds[index] == name)
                 return true;
         }
         return false;
+    };
+
+    $public.void.loaded = function(name) {
+        
+        $self.loadeds.push(name);
+
     };
 
 });
