@@ -79,6 +79,10 @@ $js.compile("$css", null, function($public, $private, $protected, $self) {
                 return o;
 
             },
+            clear: function(p) {
+                delete o.json[p];
+                return this;
+            },
             z: function(i) {
                 o.json["z-index"] = i;
                 return this;
@@ -177,6 +181,10 @@ $js.compile("$css", null, function($public, $private, $protected, $self) {
             relativeRight: function () {
                 o.json.position = "relative";
                 o.json.float = "right";
+                return this;
+            },
+            topPlain: function(t) {
+                o.json.top = t;
                 return this;
             },
             anchorTop: function() {

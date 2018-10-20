@@ -253,11 +253,10 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         $self.index = -1;
         $self.on_recurse_end = function() {
 
-            if ($view.get_purpose() == "initial") {
+            if (!$view.is_loaded($self.__schema__)) {
                 $view.loaded($self.__schema__);
                 $self.on_style($self.views);
-            } else if ($view.get_purpose() == "page")
-                $self.on_page_style($self.views);
+            }
 
             $self.on_load();
 

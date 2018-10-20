@@ -172,7 +172,7 @@ $js.compile("Module", null, function($public, $private, $protected, $self) {
 
                 $self.loaded = true;
 
-                $view.sneaky_load("page");
+                $bcast.shout("page_is_in_view");
 
                 $self.on_ready($self.pages, $self.views, $self.on_load);
 
