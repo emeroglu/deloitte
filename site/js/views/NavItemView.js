@@ -32,10 +32,26 @@ $js.compile("NavItemView", View, function($public, $private, $protected, $self) 
         _views.left.views.icon.set_side(40);
 
         _views.right.views.text.set_text($self.text);
+        _views.right.views.text.set_align("left");
         _views.right.views.text.set_height("taller");
         _views.right.views.text.set_line_height("taller");
         _views.right.views.text.set_size("smaller");
         _views.right.views.text.set_weight("normal");
+
+    };
+
+    $protected.override.void.on_medium_viewport = function(_views) {
+
+        _views.right.views.text.set_line_height("taller");
+        _views.right.views.text.apply();
+
+    };
+
+    $protected.override.void.on_narrow_viewport = function(_views) {
+
+        _views.right.views.text.set_height("tall");
+        _views.right.views.text.set_line_height("shorter");
+        _views.right.views.text.apply();
 
     };
 
@@ -50,6 +66,17 @@ $js.compile("NavItemView", View, function($public, $private, $protected, $self) 
         _views.right.select_path()
             .begin()
                 .height(60)
+            .save();
+
+    };
+
+    $protected.extension.void.on_narrow_style = function(_views) {
+
+        _views.right.select_path_viewport()
+            .begin()
+                .width(70)
+                .height(40)
+                .marginTop(10)
             .save();
 
     };

@@ -31,6 +31,11 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
     $protected.virtual.void.on_ready = function(_views, $ready) { $ready(); };
 
 
+    $protected.virtual.void.on_wide_style = function(_views) { $css.target = $view.page.get_tag() + "-" + $view.port;  };
+    $protected.virtual.void.on_medium_style = function(_views) { $css.target = $view.page.get_tag() + "-" + $view.port; };
+    $protected.virtual.void.on_narrow_style = function(_views) { $css.target = $view.page.get_tag() + "-" + $view.port; };
+    $protected.virtual.void.on_mobile_style = function(_views) { $css.target = $view.page.get_tag() + "-" + $view.port; };
+
     // Styling
 
     $private.void.generate_style_element = function(_id) {
@@ -49,6 +54,8 @@ $js.compile("Page", null, function($public, $private, $protected, $self) {
         $bcast.listen("viewport_new", function() {
 
             $self.generate_style_element($self.tag + "-" + $view.port);
+
+            eval("$self.on_" + $view.port + "_style($self.views);");
 
         });
 
