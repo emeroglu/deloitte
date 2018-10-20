@@ -40,8 +40,17 @@ $js.compile("NavItemView", View, function($public, $private, $protected, $self) 
 
     };
 
+    $protected.override.void.on_wide_viewport = function(_views) {
+
+        _views.right.views.text.set_height("taller");
+        _views.right.views.text.set_line_height("taller");
+        _views.right.views.text.apply();
+
+    };
+
     $protected.override.void.on_medium_viewport = function(_views) {
 
+        _views.right.views.text.set_height("taller");
         _views.right.views.text.set_line_height("taller");
         _views.right.views.text.apply();
 
