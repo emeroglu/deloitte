@@ -39,6 +39,34 @@ $js.compile("AccountItemView", View, function($public, $private, $protected, $se
 
     };
 
+    $protected.override.void.on_wide_viewport = function(_views) {
+
+        _views.right.views.text.set_text($self.text);
+        _views.right.views.text.apply();
+
+    };
+
+    $protected.override.void.on_medium_viewport = function(_views) {
+
+        _views.right.views.text.set_text("");
+        _views.right.views.text.apply();
+
+    };
+
+    $protected.override.void.on_narrow_viewport = function(_views) {
+
+        _views.right.views.text.set_text("");
+        _views.right.views.text.apply();
+
+    };
+
+    $protected.override.void.on_mobile_viewport = function(_views) {
+
+        _views.right.views.text.set_text("");
+        _views.right.views.text.apply();
+
+    };
+
     $protected.extension.void.on_page_style = function(_views) {
 
         _views.left.select_path()
