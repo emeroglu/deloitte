@@ -189,6 +189,11 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
     $protected.extension.void.on_mobile_style = function(_views) {
 
+        _views.top.select_viewport()
+            .begin()
+                .none()
+            .save();
+
         _views.nav.select_viewport()
             .begin()
                 .none()
