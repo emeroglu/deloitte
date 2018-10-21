@@ -61,6 +61,15 @@ $js.compile("StoreSelectorView", View, function($public, $private, $protected, $
 
     };
 
+    $protected.extension.void.on_mobile_style = function(_views) {
+
+        _views.container.select_path_viewport()
+            .begin()
+                .marginLeft(60)
+            .save();
+
+    };
+
     $protected.override.void.on_medium_viewport = function(_views) {
 
         _views.container.views.text.set_size("small");
@@ -69,6 +78,13 @@ $js.compile("StoreSelectorView", View, function($public, $private, $protected, $
     };
 
     $protected.override.void.on_narrow_viewport = function(_views) {
+
+        _views.container.views.text.set_size("smaller");
+        _views.container.views.text.apply();
+
+    };
+
+    $protected.override.void.on_mobile_viewport = function(_views) {
 
         _views.container.views.text.set_size("smaller");
         _views.container.views.text.apply();
