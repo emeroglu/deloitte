@@ -35,7 +35,25 @@ $js.compile("$server", null, function($public, $private, $protected, $self) {
 
                 $fs.createReadStream("files/image.jpg").pipe(_response);
 
-            } else {
+            } else if (_request.url == "/Search") {
+
+                let body = [];
+
+                _request.on('data', (chunk) => {
+                    body.push(chunk);
+                }).on('end', () => {
+                    
+                    body = Buffer.concat(body).toString();
+
+                    $api.search("pen");
+
+                    _response.writeHead(200, { "Content-Type": "application/json" })
+                    _response.end();
+
+                });
+
+            }
+             else {
 
                 _response.write("OK");
                 _response.end();
