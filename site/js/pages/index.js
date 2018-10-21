@@ -189,6 +189,11 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
     $protected.extension.void.on_mobile_style = function(_views) {
 
+        _views.compound.select_viewport()
+            .begin()
+                .height(120)
+            .save();
+
         _views.top.select_viewport()
             .begin()
                 .none()
@@ -198,6 +203,44 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
             .begin()
                 .none()
             .save();
+
+        _views.compound.views.store_selection.select_viewport()
+            .begin()
+                .widthCropFromFull(120)
+                .height(60)
+            .save();
+
+        _views.compound.views.search.select_viewport()
+            .begin()
+                .widthFull()
+                .height(60)
+            .save();
+
+        _views.compound.views.account.select_viewport()
+            .begin()
+                .width(120)
+                .height(60)
+            .save();
+
+    };
+
+    $protected.override.void.on_narrow_viewport = function(_views) {
+
+        let e = _views.compound.views.search.get_element();
+        let e2 = _views.compound.views.account.get_element();
+        let p = _views.compound.get_element();
+
+        p.insertBefore(e, e2);
+
+    };
+
+    $protected.override.void.on_mobile_viewport = function(_views) {
+
+        let e = _views.compound.views.search.get_element();
+        let e2 = _views.compound.views.account.get_element();
+        let p = _views.compound.get_element();
+
+        p.insertBefore(e2, e);
 
     };
 

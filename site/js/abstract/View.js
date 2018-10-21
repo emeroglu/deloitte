@@ -1,13 +1,14 @@
 $js.compile("View", null, function($public, $private, $protected, $self) {
 
-    $public.field.element = null;
-
     $public.field.views = {};
 
     $private.field.state = "";
     $private.field.anim = "";
     $private.field.duration = 0;
 
+    $private.field.element = null;
+    $public.func.get_element = function() { return $self.element; };
+    
     $private.field.name = "";
     $public.func.set_name = function(_name) { $self.name = _name; };
 
