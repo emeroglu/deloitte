@@ -32,6 +32,24 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
 
     };
 
+    $protected.override.void.on_ready = function(_views, $ready) {
+
+        let txt = _views.input.views.text;
+
+        txt.onKeyRelease(function() {
+
+            if (2 < txt.text().length) {
+
+                $api.search(txt.text());
+
+            }
+
+        });
+
+        $ready();
+
+    };
+
     $protected.extension.void.on_style = function(_views) {
 
         $self.select_tag()

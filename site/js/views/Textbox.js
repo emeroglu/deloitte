@@ -11,6 +11,9 @@ $js.compile("Textbox", View, function($public, $private, $protected, $self) {
     $private.void.on_change = function() {};
     $public.delegate.onChange = function($delegate) { $self.on_change = $delegate; return $self; };
 
+    $private.void.on_key_release = function() {};
+    $public.delegate.onKeyRelease = function($delegate) { $self.on_key_release = $delegate; return $self; };
+
     $public.override.void.apply = function() {
 
         $self.input.setAttribute("d-size", $self.size);
@@ -58,6 +61,12 @@ $js.compile("Textbox", View, function($public, $private, $protected, $self) {
                 $self.text("");
 
             $self.on_change($self.text());
+
+        };
+
+        $self.input.onkeyup = function() {
+
+            $self.on_key_release();
 
         };
 
