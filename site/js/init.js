@@ -1,5 +1,7 @@
+$global.$api = new $api();
 $global.$bcast = new $bcast();
 $global.$css = new $css();
+$global.$http = new $http();
 $global.$view = new $view();
 
 $window.onresize = function() {

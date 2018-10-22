@@ -62,13 +62,16 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
 
         $self.queue.push("../js.js");
         
+        $self.queue.push("../site/js/services/api.js");
         $self.queue.push("../site/js/services/bcast.js");
         $self.queue.push("../site/js/services/css.js");
+        $self.queue.push("../site/js/services/http.js");
         $self.queue.push("../site/js/services/view.js");
         
         $self.queue.push("../site/js/abstract/Module.js");
         $self.queue.push("../site/js/abstract/Page.js");
         $self.queue.push("../site/js/abstract/View.js");
+        $self.queue.push("../site/js/abstract/WebRequest.js");
         
         $self.queue.push("../site/js/modules/Main.js");
         

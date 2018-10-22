@@ -45,10 +45,13 @@ $js.compile("$server", null, function($public, $private, $protected, $self) {
                     
                     body = Buffer.concat(body).toString();
 
-                    $api.search("pen");
+                    $api.search(body, function(_text, _json) {
 
-                    _response.writeHead(200, { "Content-Type": "application/json" })
-                    _response.end();
+                        _response.writeHead(200, { "Content-Type": "application/json" })
+                        _response.write(_text);
+                        _response.end();
+
+                    });
 
                 });
 
