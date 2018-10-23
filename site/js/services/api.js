@@ -9,7 +9,7 @@ $js.compile("$api", null, function($public, $private, $protected, $self) {
                 .setData(_query)
                 .onSuccess(function(_text, _json, _response) {
 
-                    alert(_text);
+                    console.log(_text);
 
                 })
             .send();
