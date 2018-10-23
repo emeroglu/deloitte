@@ -5,10 +5,10 @@ $js.compile("ListItemView", View, function($public, $private, $protected, $self)
 
     $protected.override.func.on_key = function() { return "list-item-view"; };
 
-    $protected.extension.void.on_page_style = function(_views) {
+    $protected.extension.void.on_self_style = function(_views) {
 
         if ($self.padding != 0) {
-            $self.select_path()
+            $self.select()
                 .begin()
                     .paddingHorizontal($self.padding)
                 .save();

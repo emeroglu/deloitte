@@ -102,24 +102,28 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
                         .commit();
 
                     let item, category;
-                    let categories = [], keywords = [];
+                    let categories = [], results = [];
 
                     for (let index in _json) {
+                        
                         item = _json[index];
+                        
                         for (let i in item.categories) {
                             
                             category = item.categories[i];
 
-                            if (category in categories) {
-
-                            } else 
+                            if (!categories.includes(category))
                                 categories.push(item.categories[i]);
 
                         }
+
+                        results.push({ image: item.image, text: item.name });
+
                     }
 
                     _views.result.views.result.set_query(query);
                     _views.result.views.result.set_categories(categories);
+                    _views.result.views.result.set_results(results);
                     _views.result.views.result.apply();
 
                 });
@@ -171,7 +175,7 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
         _views.result.select_path()
             .begin()
                 .z(1)
-                .widthExtendUponFull(300)
+                .width(800)
                 .height(300)
                 .top(50)
             .save();

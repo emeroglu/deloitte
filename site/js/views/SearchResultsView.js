@@ -19,6 +19,11 @@ $js.compile("SearchResultsView", View, function($public, $private, $protected, $
 
         $self.views.left.views.categories.views.list.update();
 
+        $self.views.right.views.label.views.text.set_text("Top Results for \"" + $self.query + "\"");
+        $self.views.right.views.label.views.text.apply();
+
+        $self.views.right.views.results.views.list.update();
+
     };
 
     $protected.override.func.on_key = function() { return "search-results-view"; };
@@ -37,7 +42,10 @@ $js.compile("SearchResultsView", View, function($public, $private, $protected, $
         _views.right.set_name("right");
 
         _views.right.views.label = new RelativeLayout();
+        _views.right.views.label.set_name("label");
+
         _views.right.views.results = new RelativeLayout();
+        _views.right.views.results.set_name("results");
 
     };
 
@@ -47,14 +55,19 @@ $js.compile("SearchResultsView", View, function($public, $private, $protected, $
 
         _views.left.views.categories.views.list = new VerticalListView();
 
+        _views.right.views.label.views.text = new TextView();
+
+        _views.right.views.results.views.list = new HorizontalListView();
+
     };
 
     $protected.override.void.on_feed = function(_views) {
 
         _views.left.views.query.views.text.set_text($self.query);
         _views.left.views.query.views.text.set_align("left");
-        _views.left.views.query.views.text.set_height("taller");
-        _views.left.views.query.views.text.set_line_height("taller");
+        _views.left.views.query.views.text.set_height("tall");
+        _views.left.views.query.views.text.set_line_height("tall");
+        _views.left.views.query.views.text.set_size("small");
         _views.left.views.query.views.text.set_weight("bold");
 
         _views.left.views.categories.views.list
@@ -74,12 +87,69 @@ $js.compile("SearchResultsView", View, function($public, $private, $protected, $
                 })
                 .onFeed(function(_item, _model, _index) {
 
-                    _item.views.text.set_text((_model.length < 20) ? _model : _model.substring(0, 17) + "...");
+                    _item.views.text.set_text((_model.length < 25) ? _model : _model.substring(0, 22) + "...");
 
                 })
                 .onUpdate(function(_item, _model, _index) {
 
                     _item.views.text.apply();
+
+                });
+
+        _views.right.views.label.views.text.set_text("Top Results for \"" + $self.query + "\"");
+        _views.right.views.label.views.text.set_align("left");
+        _views.right.views.label.views.text.set_height("taller");
+        _views.right.views.label.views.text.set_line_height("taller");
+        _views.right.views.label.views.text.set_size("medium");
+        _views.right.views.label.views.text.set_weight("bold");
+        _views.right.views.label.views.text.set_color("black");
+
+        _views.right.views.results.views.list
+            .begin()
+                .setItemPadding(10)
+                .onModel(function() {
+                    return $self.results;
+                })
+                .onConstruct(function(_item, _model, _index) {
+
+                    _item.views.image = new RelativeLayout();
+                    _item.views.image.set_name("item_image");
+
+                    _item.views.text = new RelativeLayout();
+                    _item.views.text.set_name("item_text");
+
+                })
+                .onFlourish(function(_item, _model, _index) {
+
+                    _item.views.image.views.image = new ImageView();
+
+                    _item.views.text.views.text = new TextView();
+
+                })
+                .onFeed(function(_item, _model, _index) {
+
+                    _item.views.image.views.image.set_src(_model.image);
+
+                    if (_model.text.length < 20) {
+                        _item.views.text.views.text.set_text(_model.text);
+                        _item.views.text.views.text.set_height("taller");
+                        _item.views.text.views.text.set_line_height("taller");
+                        _item.views.text.views.text.set_size("smaller");
+                    } else {
+                        _item.views.text.views.text.set_text(_model.text.substring(0, 47) + "...");
+                        _item.views.text.views.text.set_height("tallest");
+                        _item.views.text.views.text.set_line_height("shorter");
+                        _item.views.text.views.text.set_size("smallest");
+                    }
+
+                    _item.views.text.views.text.set_weight("light");
+
+                })
+                .onUpdate(function(_item, _model, _index) {
+
+                    _item.views.image.views.image.apply();
+
+                    _item.views.text.views.text.apply();
 
                 });
 
@@ -104,14 +174,14 @@ $js.compile("SearchResultsView", View, function($public, $private, $protected, $
         _views.left.views.query.select_path()
             .begin()
                 .widthCropFromFull(15)
-                .height(60)
+                .height(40)
                 .marginLeft(15)
             .save();
 
         _views.left.views.categories.select_path()
             .begin()
                 .widthCropFromFull(2)
-                .heightCropFromFull(62)
+                .heightCropFromFull(42)
                 .borderTop("1px #C3C3C3 solid")
                 .borderRight("1px #C3C3C3 solid")
                 .backgroundColor("#FFFFFF")
@@ -120,7 +190,8 @@ $js.compile("SearchResultsView", View, function($public, $private, $protected, $
         _views.left.views.categories.views.list.select_path()
             .begin()
                 .widthCropFromFull(30)
-                .heightCentered(225)
+                .height(225)
+                .top(10)
                 .left(30)
             .save();
 
@@ -128,6 +199,39 @@ $js.compile("SearchResultsView", View, function($public, $private, $protected, $
             .begin()
                 .widthCropFromFull(200)
                 .heightFull()
+            .save();
+
+        _views.right.views.label.select_path()
+            .begin()
+                .widthCropFromFull(15)
+                .height(60)
+                .marginLeft(15)
+            .save();
+
+        _views.right.views.results.select_path()
+            .begin()
+                .widthCropFromFull(15)
+                .heightCropFromFull(60)
+                .marginLeft(15)
+            .save();
+
+        $css.select(_views.right.views.results.selector("path") + " d-list-item-view")
+            .begin()
+                .width(160)
+            .save();
+
+        $css.select(_views.right.views.results.selector("path") + " d-list-item-view d-relative-layout[d-name='item_image']")
+            .begin()
+                .side(150)
+                .marginTop(10)
+                .marginLeft(10)
+            .save();
+
+        $css.select(_views.right.views.results.selector("path") + " d-list-item-view d-relative-layout[d-name='item_text']")
+            .begin()
+                .width(160)
+                .height(70)
+                .marginTop(10)
             .save();
 
     };

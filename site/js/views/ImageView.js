@@ -5,6 +5,12 @@ $js.compile("ImageView", View, function($public, $private, $protected, $self) {
     $private.field.src = "";
     $public.void.set_src = function(_src) { $self.src = _src; };
 
+    $public.override.void.apply = function() {
+
+        $self.img.src = $self.src;
+
+    };
+
     $protected.override.func.on_key = function() { return "image-view"; };
 
     $protected.override.func.on_compile = function() {
