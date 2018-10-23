@@ -7,10 +7,12 @@ $js.compile("ListItemView", View, function($public, $private, $protected, $self)
 
     $protected.extension.void.on_page_style = function(_views) {
 
-        $self.select_path()
-            .begin()
-                .paddingHorizontal($self.padding)
-            .save();
+        if ($self.padding != 0) {
+            $self.select_path()
+                .begin()
+                    .paddingHorizontal($self.padding)
+                .save();
+        }
 
     };
 

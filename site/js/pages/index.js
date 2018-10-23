@@ -53,9 +53,13 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
                 .onModel(function() {
                     return ["Tools & Vehicles", "Credit Services", "Pro Services", "Order Status", "Customer Support", "Français"];
                 })
-                .onGenerate(function(_view, _model) {
+                .onConstruct(function(_view, _model) {
 
                     _view.views.text = new ReflectiveTextView();
+
+                })
+                .onFeed(function(_view, _model, _index) {
+
                     _view.views.text.set_text(_model);
                     _view.views.text.set_height("tall");
                     _view.views.text.set_size("smallest");
@@ -72,9 +76,13 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
                         { icon: "shopping-cart", text: "Cart" }
                     ];
                 })
-                .onGenerate(function(_view, _model) {
+                .onConstruct(function(_view, _model, _index) {
 
                     _view.views.item = new AccountItemView();
+
+                })
+                .onFeed(function(_view, _model, _index) {
+
                     _view.views.item.set_icon(_model.icon);
                     _view.views.item.set_text(_model.text);
 
@@ -94,9 +102,13 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
                         { icon: "file", text: "Weekly Flyer" }
                     ];
                 })
-                .onGenerate(function(_view, _model) {
+                .onConstruct(function(_view, _model, _index) {
 
                     _view.views.item = new NavItemView();
+
+                })
+                .onFeed(function(_view, _model, _index) {
+
                     _view.views.item.set_icon(_model.icon);
                     _view.views.item.set_text(_model.text);
 

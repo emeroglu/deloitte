@@ -45,7 +45,7 @@ $js.compile("WebRequest", null, function($public, $private, $protected, $self) {
 
         };
         xhr.open($self.method, $self.url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Content-Type", "text/plain");
         xhr.send(JSON.stringify($self.data));
 
     };

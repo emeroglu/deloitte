@@ -331,6 +331,10 @@ $js.compile("$css", null, function($public, $private, $protected, $self) {
                 o.json.height = "calc(100% - " + px + "px)";
                 return this;
             },
+            heightCropFromHalf: function (px) {
+                o.json.height = "calc(50% - " + px + "px)";
+                return this;
+            },
             heightCropFromFullScreen: function (px) {
                 o.json.height = "calc(100vh - " + px + "px)";
                 return this;
@@ -708,6 +712,10 @@ $js.compile("$css", null, function($public, $private, $protected, $self) {
             },
             borderTop: function (b) {
                 o.json["border-top"] = b;
+                return this;
+            },
+            borderRight: function (b) {
+                o.json["border-right"] = b;
                 return this;
             },
             borderBottom: function (b) {

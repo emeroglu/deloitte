@@ -17,6 +17,21 @@ $js.compile("IconView", View, function($public, $private, $protected, $self) {
     $private.field.color = "";
     $public.void.set_color = function(_color) { $self.color = _color; };
 
+    $public.override.void.apply = function() {
+      
+        let fa = "";
+
+        if ($self.weight == "light")
+            fa = "fal";
+        else if ($self.weight == "regular")
+            fa = "far";
+        else
+            fa = "fa";
+            
+        $self.i.className = fa + " fa-" + $self.icon;
+
+    };
+
     $protected.override.func.on_key = function() { return "icon-view"; };
 
     $protected.override.func.on_compile = function() {

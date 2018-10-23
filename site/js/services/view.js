@@ -23,10 +23,12 @@ $js.compile("$view", null, function($public, $private, $protected, $self) {
         RelativeLayout, 
         ReflectiveImageView, 
         ReflectiveTextView, 
+        SearchResultsView, 
         SearchView, 
         StoreSelectorView, 
         Textbox,
-        TextView
+        TextView,
+        VerticalListView
     ];
     $private.field.loadeds = [];
     $private.void.recurse = function() {

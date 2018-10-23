@@ -94,9 +94,11 @@ $js.compile("$compiler", null, function($public, $private, $protected, $self) {
         $self.queue.push("../site/js/views/RelativeLayout.js");
         $self.queue.push("../site/js/views/ReflectiveImageView.js");
         $self.queue.push("../site/js/views/ReflectiveTextView.js");
+        $self.queue.push("../site/js/views/SearchResultsView.js");
         $self.queue.push("../site/js/views/SearchView.js");
         $self.queue.push("../site/js/views/StoreSelectorView.js");
         $self.queue.push("../site/js/views/Textbox.js");
+        $self.queue.push("../site/js/views/VerticalListView.js");
         
         $self.queue.push("../site/js/init.js");
 

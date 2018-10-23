@@ -21,7 +21,9 @@ $js.compile("HorizontalListView", ListView, function($public, $private, $protect
             view.set_name(name);
             view.set_padding($self.padding);
 
-            $self.on_generate(view, $self.model[index]);
+            $self.on_item_construct(view, $self.model[index], index);
+            $self.on_item_flourish(view, $self.model[index], index);
+            $self.on_item_feed(view, $self.model[index], index);
 
             _views.container.views[name] = view;
 

@@ -79,7 +79,6 @@ $js.compile("$api", null, function($public, $private, $protected, $self) {
         $self.index++;
 
         if ($self.index == 0) {
-            $self.json = [];
             $self.products = [];
         }
 

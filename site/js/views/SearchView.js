@@ -7,22 +7,38 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
         _views.input = new RelativeLayout();
         _views.input.set_name("input");
 
+        _views.input.views.text = new RelativeLayout();
+        _views.input.views.text.set_name("text");
+
+        _views.input.views.icon = new RelativeLayout();
+        _views.input.views.icon.set_name("icon");
+
         _views.icon = new RelativeLayout();
-        _views.icon.set_name("icon");
+        _views.icon.set_name("search_icon");
+
+        _views.result = new AbsoluteLayout();
 
     };
 
     $protected.override.void.on_flourish = function(_views) {
 
-        _views.input.views.text = new Textbox();
+        _views.input.views.text.views.box = new Textbox();
+        _views.input.views.icon.views.icon = new IconView();
         _views.icon.views.icon = new IconView();
+        _views.result.views.result = new SearchResultsView();
 
     };
 
     $protected.override.void.on_feed = function(_views) {
 
-        _views.input.views.text.set_placeholder("Search over 130,000 products...");
-        _views.input.views.text.set_size("small");
+        _views.input.views.text.views.box.set_placeholder("Search over 130,000 products...");
+        _views.input.views.text.views.box.set_size("small");
+
+        _views.input.views.icon.views.icon.set_icon("times");
+        _views.input.views.icon.views.icon.set_weight("");
+        _views.input.views.icon.views.icon.set_size(20);
+        _views.input.views.icon.views.icon.set_side(40);
+        _views.input.views.icon.views.icon.set_color("#616161");
 
         _views.icon.views.icon.set_icon("search");
         _views.icon.views.icon.set_weight("");
@@ -34,13 +50,79 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
 
     $protected.override.void.on_ready = function(_views, $ready) {
 
-        let txt = _views.input.views.text;
+        let txt = _views.input.views.text.views.box;
+        let icon = _views.input.views.icon.views.icon;
+        let result = _views.result;
+
+        icon.select()
+            .begin()
+                .none()
+            .commit();
+
+        result.select()
+            .begin()    
+                .none()
+            .commit();
 
         txt.onKeyRelease(function() {
 
-            if (2 < txt.text().length) {
+            let query = txt.text();
+            let l = query.length;
 
-                $api.search(txt.text());
+            if (l == 0) {
+
+                icon.select()
+                    .begin()
+                        .none()
+                    .commit();
+
+                result.select()
+                    .begin()    
+                        .none()
+                    .commit();
+
+            } else if (2 < l) {
+
+                icon.select()
+                    .begin()
+                        .disp()
+                    .commit();
+
+                _views.input.views.icon.views.icon.set_icon("spinner fa-spin");
+                _views.input.views.icon.views.icon.apply();
+
+                $api.search(query, function(_text, _json, _response) {
+
+                    _views.input.views.icon.views.icon.set_icon("times");
+                    _views.input.views.icon.views.icon.apply();
+
+                    result.select()
+                        .begin()
+                            .disp()
+                        .commit();
+
+                    let item, category;
+                    let categories = [], keywords = [];
+
+                    for (let index in _json) {
+                        item = _json[index];
+                        for (let i in item.categories) {
+                            
+                            category = item.categories[i];
+
+                            if (category in categories) {
+
+                            } else 
+                                categories.push(item.categories[i]);
+
+                        }
+                    }
+
+                    _views.result.views.result.set_query(query);
+                    _views.result.views.result.set_categories(categories);
+                    _views.result.views.result.apply();
+
+                });
 
             }
 
@@ -61,14 +143,21 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
 
         _views.input.select_path()
             .begin()
-                .widthCropFromFull(40)
-                .heightFull()
+                .widthCropFromFull(42)
+                .heightCentered(40)
+                .border("1px #C3C3C3 solid")
             .save();
 
         _views.input.views.text.select_path()
             .begin()
+                .widthCropFromFull(40)
                 .heightCentered(40)
-                .border("1px #C3C3C3 solid")
+            .save();
+
+        _views.input.views.icon.select_path()
+            .begin()
+                .width(40)
+                .heightCentered(40)
             .save();
         
         _views.icon.select_path()
@@ -77,6 +166,14 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
                 .height(42)
                 .marginTop(10)
                 .backgroundColor("#f2812f")
+            .save();
+
+        _views.result.select_path()
+            .begin()
+                .z(1)
+                .widthExtendUponFull(300)
+                .height(300)
+                .top(50)
             .save();
 
     };
@@ -99,15 +196,15 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
 
     $protected.override.void.on_medium_viewport = function(_views) {
 
-        _views.input.views.text.set_size("small");
-        _views.input.views.text.apply();
+        _views.input.views.text.views.box.set_size("small");
+        _views.input.views.text.views.box.apply();
 
     };
 
     $protected.override.void.on_narrow_viewport = function(_views) {
 
-        _views.input.views.text.set_size("smaller");
-        _views.input.views.text.apply();
+        _views.input.views.text.views.box.set_size("smaller");
+        _views.input.views.text.views.box.apply();
 
     };
 
