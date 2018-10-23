@@ -30,4 +30,11 @@ $js.compile("$http", null, function($public, $private, $protected, $self) {
 
     };
 
+    $public.void.abort = function() {
+
+        if ($self.request != null)
+            $self.request.abort();
+
+    };
+
 });

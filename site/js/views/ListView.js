@@ -26,7 +26,7 @@ $js.compile("ListView", View, function($public, $private, $protected, $self) {
 
             $self.model = model;
 
-            $self.views.container.get_element().remove();
+            $self.views.container.destroy();
 
             $self.views.container = new View();
 

@@ -168,11 +168,14 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         let key = $self.keys[$self.index];
         let view = $self.views[key];
 
-        view
-            .begin()
-                .setParent($self)
-                .onLoad($self.recurse)
-            .load();
+        if (view == null)
+            delete view;
+        else 
+            view
+                .begin()
+                    .setParent($self)
+                    .onLoad($self.recurse)
+                .load();
 
     };
 
@@ -213,6 +216,20 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
 
         };
         $self.recurse();
+
+    };
+
+    // Destroy
+
+    $public.void.destroy = function() {
+
+        for (let key in $self.views) {
+            $self.views[key].destroy();
+        }
+
+        $self.element.remove();
+
+        delete $self;
 
     };
 

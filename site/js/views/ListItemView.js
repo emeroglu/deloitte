@@ -7,7 +7,7 @@ $js.compile("ListItemView", View, function($public, $private, $protected, $self)
 
     $protected.extension.void.on_self_style = function(_views) {
 
-        if ($self.padding != 0) {
+        if ($self.padding != undefined && $self.padding != 0) {
             $self.select()
                 .begin()
                     .paddingHorizontal($self.padding)

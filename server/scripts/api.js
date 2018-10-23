@@ -22,97 +22,29 @@ $js.compile("$api", null, function($public, $private, $protected, $self) {
             
             _response.on('end', () => {
 
-                $self.items = JSON.parse(data).items;
-                
-                $self.index = -1;
-                $self.on_recurse_end = function() {
+                let items = JSON.parse(data).items;
+                let products = [];
 
-                    $success(JSON.stringify($self.products), $self.products);
+                for (let index in items) {
 
-                };
-                $self.recurse();
-                
-            });
-
-        });
-
-    };
-
-    $private.void.recommendations = function(_item_id, $success, $no_found) {
-
-        let url = $self.url;
-        url += "/nbp";
-        url += "?apiKey=" + $self.api_key;
-        url += "&itemId=" + _item_id;
-        url += "&numItems=3";
-
-        $http.get(url, function(_response) {
-
-            let data = "";
-
-            _response.on('data', (chunk) => {
-                data += chunk;
-            });
-            
-            _response.on('end', () => {
-
-                let json = JSON.parse(data);
-
-                if (json.errors == undefined)
-                    $success(data, json);
-                else
-                    $no_found();
-
-            });
-
-        });
-
-    };
-
-    $private.field.items = [];
-    $private.field.products = [];
-
-    $private.field.index = 0;
-    $private.void.on_recurse_end = function() {};
-    $private.void.recurse = function() {
-
-        $self.index++;
-
-        if ($self.index == 0) {
-            $self.products = [];
-        }
-
-        if ($self.index == $self.items.length) {
-            $self.on_recurse_end();
-            return;
-        }
-
-        let item = $self.items[$self.index];
+                    let item = items[index];
         
-        let product = {};
-        product.id = item.itemId;
-        product.name = item.name;
-        product.image = item.mediumImage;
-        product.categories = item.categoryPath.split("/");
-        product.suggesteds = [];
+                    let product = {};
+                    product.id = item.itemId;
+                    product.name = item.name;
+                    product.image = item.mediumImage;
+                    product.categories = item.categoryPath.split("/");
 
-        $self.recommendations(product.id, function(_text, _json) {
+                    products.push(product);
 
-            for (let index in _json) {
-                product.suggesteds.push(_json[index].name);
-            }
+                }
 
-            $self.products.push(product);
-
-            $self.recurse();
-
-        }, function() {
-
-            $self.products.push(product);
-
-            $self.recurse();
+                $success(JSON.stringify(products), products);
+                
+            });
 
         });
+
     };
 
 });

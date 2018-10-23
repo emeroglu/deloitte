@@ -1,5 +1,7 @@
 $js.compile("WebRequest", null, function($public, $private, $protected, $self) {
 
+    $private.field.xhr = null;
+
     $private.field.method = "";
     $public.void.set_method = function(_method) { $self.method = _method; };
 
@@ -17,17 +19,17 @@ $js.compile("WebRequest", null, function($public, $private, $protected, $self) {
 
     $public.void.send = function() {
 
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
+        $self.xhr = new XMLHttpRequest();
+        $self.xhr.onreadystatechange = function() {
 
-            if (xhr.readyState == XMLHttpRequest.DONE) {
+            if ($self.xhr.readyState == XMLHttpRequest.DONE) {
 
-                if (xhr.status == 200) {
+                if ($self.xhr.status == 200) {
 
                     let response = {};
                     response.code = 200;
-                    response.text = xhr.responseText;
-                    response.json = JSON.parse(xhr.responseText);
+                    response.text = $self.xhr.responseText;
+                    response.json = JSON.parse($self.xhr.responseText);
                     
                     $self.on_success(response);
 
@@ -35,7 +37,7 @@ $js.compile("WebRequest", null, function($public, $private, $protected, $self) {
 
                     let response = {};
 
-                    response.code = xhr.status;
+                    response.code = $self.xhr.status;
 
                     $self.on_error(response);
 
@@ -44,9 +46,15 @@ $js.compile("WebRequest", null, function($public, $private, $protected, $self) {
             }
 
         };
-        xhr.open($self.method, $self.url, true);
-        xhr.setRequestHeader("Content-Type", "text/plain");
-        xhr.send(JSON.stringify($self.data));
+        $self.xhr.open($self.method, $self.url, true);
+        $self.xhr.setRequestHeader("Content-Type", "text/plain");
+        $self.xhr.send(JSON.stringify($self.data));
+
+    };
+
+    $public.void.abort = function() {
+
+        $self.xhr.abort();
 
     };
 

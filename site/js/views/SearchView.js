@@ -1,5 +1,10 @@
 $js.compile("SearchView", View, function($public, $private, $protected, $self) {
 
+    $private.field.last_search = null;
+    $private.field.locked = false;
+
+    $private.field.last_query = "";
+
     $protected.override.func.on_key = function() { return "search-view"; };
 
     $protected.override.void.on_construct = function(_views) {
@@ -50,6 +55,8 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
 
     $protected.override.void.on_ready = function(_views, $ready) {
 
+        $self.last_search = new Date().getTime();
+
         let txt = _views.input.views.text.views.box;
         let icon = _views.input.views.icon.views.icon;
         let result = _views.result;
@@ -69,7 +76,9 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
             let query = txt.text();
             let l = query.length;
 
-            if (l == 0) {
+            if (l <= 2) {
+
+                $self.last_query = query;
 
                 icon.select()
                     .begin()
@@ -81,53 +90,66 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
                         .none()
                     .commit();
 
-            } else if (2 < l) {
+            } else if ($self.last_query.length < query.length) {
 
-                icon.select()
-                    .begin()
-                        .disp()
-                    .commit();
+                $self.last_query = query;
 
-                _views.input.views.icon.views.icon.set_icon("spinner fa-spin");
-                _views.input.views.icon.views.icon.apply();
+                let now = new Date().getTime();
+                let diff = now - $self.last_search;
 
-                $api.search(query, function(_text, _json, _response) {
+                if (300 < diff) {
 
-                    _views.input.views.icon.views.icon.set_icon("times");
-                    _views.input.views.icon.views.icon.apply();
-
-                    result.select()
+                    icon.select()
                         .begin()
                             .disp()
                         .commit();
 
-                    let item, category;
-                    let categories = [], results = [];
+                    _views.input.views.icon.views.icon.set_icon("spinner fa-spin");
+                    _views.input.views.icon.views.icon.apply();
 
-                    for (let index in _json) {
-                        
-                        item = _json[index];
-                        
-                        for (let i in item.categories) {
+                    $api.search(query, function(_text, _json, _response) {
+
+                        _views.input.views.icon.views.icon.set_icon("times");
+                        _views.input.views.icon.views.icon.apply();
+
+                        result.select()
+                            .begin()
+                                .disp()
+                            .commit();
+
+                        let item, category;
+                        let categories = [], results = [];
+
+                        for (let index in _json) {
                             
-                            category = item.categories[i];
+                            item = _json[index];
+                            
+                            for (let i in item.categories) {
+                                
+                                category = item.categories[i];
 
-                            if (!categories.includes(category))
-                                categories.push(item.categories[i]);
+                                if (!categories.includes(category))
+                                    categories.push(item.categories[i]);
+
+                            }
+
+                            results.push({ image: item.image, text: item.name });
 
                         }
 
-                        results.push({ image: item.image, text: item.name });
+                        _views.result.views.result.set_query(query);
+                        _views.result.views.result.set_categories(categories);
+                        _views.result.views.result.set_results(results);
+                        _views.result.views.result.apply();
 
-                    }
+                    });
 
-                    _views.result.views.result.set_query(query);
-                    _views.result.views.result.set_categories(categories);
-                    _views.result.views.result.set_results(results);
-                    _views.result.views.result.apply();
+                }
 
-                });
+            } else {
 
+                $self.last_query = query;
+                
             }
 
         });

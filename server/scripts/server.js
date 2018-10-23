@@ -41,7 +41,17 @@ $js.compile("$server", null, function($public, $private, $protected, $self) {
 
                 _request.on('data', (chunk) => {
                     body.push(chunk);
-                }).on('end', () => {
+                })
+                .on("abort", function() {
+                    
+                    console.log("Abort!!!");
+
+                    _response.writeHead(200, { "Content-Type": "text/plain" })
+                    _response.write("Abort!!!");
+                    _response.end();
+
+                })
+                .on('end', () => {
                     
                     body = Buffer.concat(body).toString();
 
@@ -55,8 +65,7 @@ $js.compile("$server", null, function($public, $private, $protected, $self) {
 
                 });
 
-            }
-             else {
+            } else {
 
                 _response.write("OK");
                 _response.end();
