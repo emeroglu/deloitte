@@ -215,19 +215,19 @@ $js.compile("SearchResultsView", View, function($public, $private, $protected, $
                 .marginLeft(15)
             .save();
 
-        $css.select(_views.right.views.results.selector("path") + " d-list-item-view")
+        _views.right.views.results.views.list.views.container.views.item.select_path()
             .begin()
                 .width(160)
             .save();
 
-        $css.select(_views.right.views.results.selector("path") + " d-list-item-view d-relative-layout[d-name='item_image']")
+        _views.right.views.results.views.list.views.container.views.item.views.image.select_path()
             .begin()
                 .side(150)
                 .marginTop(10)
                 .marginLeft(10)
             .save();
 
-        $css.select(_views.right.views.results.selector("path") + " d-list-item-view d-relative-layout[d-name='item_text']")
+        _views.right.views.results.views.list.views.container.views.item.views.text.select_path()
             .begin()
                 .width(160)
                 .height(70)

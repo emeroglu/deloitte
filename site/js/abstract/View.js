@@ -168,14 +168,19 @@ $js.compile("View", null, function($public, $private, $protected, $self) {
         let key = $self.keys[$self.index];
         let view = $self.views[key];
 
-        if (view == null)
+        if (view == null) {
+
             delete view;
-        else 
+
+        } else {
+            
             view
                 .begin()
                     .setParent($self)
                     .onLoad($self.recurse)
                 .load();
+
+        }
 
     };
 

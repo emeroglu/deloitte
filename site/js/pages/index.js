@@ -127,7 +127,7 @@ $js.compile("IndexPage", Page, function($public, $private, $protected, $self) {
 
     };
 
-    $protected.extension.void.on_style = function(_views) {
+    $protected.override.void.on_style = function(_views) {
 
         _views.top.select()
             .begin()

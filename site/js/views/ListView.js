@@ -60,18 +60,54 @@ $js.compile("ListView", View, function($public, $private, $protected, $self) {
     $protected.func.on_model = function() { return []; };
     $public.delegate.onModel = function($delegate) { $self.on_model = $delegate; return $self; };
 
-    $protected.void.on_item_construct = function(_view, _model) { };
+    $protected.void.on_item_construct = function(_view, _model, _index) { };
     $public.delegate.onConstruct = function($delegate) { $self.on_item_construct = $delegate; return $self; };
 
-    $protected.void.on_item_flourish = function(_view, _model) { };
+    $protected.void.on_item_flourish = function(_view, _model, _index) { };
     $public.delegate.onFlourish = function($delegate) { $self.on_item_flourish = $delegate; return $self; };
 
-    $protected.void.on_item_feed = function(_view, _model) { };
+    $protected.void.on_item_feed = function(_view, _model, _index) { };
     $public.delegate.onFeed = function($delegate) { $self.on_item_feed = $delegate; return $self; };
 
-    $protected.void.on_item_update = function(_view, _model) { };
+    $protected.void.on_item_update = function(_view, _model, _index) { };
     $public.delegate.onUpdate = function($delegate) { $self.on_item_update = $delegate; return $self; };
 
+    $protected.override.void.on_construct = function(_views) {
+
+        $self.model = $self.on_model();
+
+        _views.container = new View();
+
+        let view = new ListItemView();
+        $self.on_item_construct(view, null, -1);
+        //$self.on_item_flourish(view, null, -1);
+        _views.container.views.item = view;
+
+        for (let index in $self.model) {
+
+            let name = "item_" + index;
+            let view = new ListItemView();
+            view.set_name(name);
+            view.set_padding($self.padding);
+
+            $self.on_item_construct(view, $self.model[index], index);
+            $self.on_item_flourish(view, $self.model[index], index);
+            $self.on_item_feed(view, $self.model[index], index);
+
+            _views.container.views[name] = view;
+
+        }
+
+    };
+
+    $protected.override.void.on_ready = function(_views, $ready) {
+
+        _views.container.views.item.get_element().className = "d-none";
+
+        $ready();
+
+    };
+    
     $protected.extension.void.on_style = function(_views) {
 
         $self.select_tag()
