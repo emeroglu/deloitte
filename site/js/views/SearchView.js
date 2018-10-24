@@ -149,7 +149,7 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
             } else {
 
                 $self.last_query = query;
-                
+
             }
 
         });
@@ -204,6 +204,24 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
 
     };
 
+    $protected.extension.void.on_medium_style = function(_views) {
+
+        _views.result.select_path_viewport()
+            .begin()
+                .widthCentered(800)
+            .save();
+
+    };
+
+    $protected.extension.void.on_narrow_style = function(_views) {
+
+        _views.result.select_path_viewport()
+            .begin()
+                .widthCentered(760)
+            .save();
+
+    };
+
     $protected.extension.void.on_mobile_style = function(_views) {
 
         $self.select_viewport()
@@ -211,11 +229,22 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
                 .backgroundColor("#f2812f")
             .save();
 
-        _views.input.views.text.select_path_viewport()
+        _views.input.select_path_viewport()
             .begin()
-                .widthCropFromFull(21)
-                .left(10)
+                .widthCropFromFull(57)
+                .marginLeft(10)
+                .backgroundColor("#FFFFFF")
                 .border("none")
+            .save();
+
+        _views.icon.select_path_viewport()
+            .begin()
+                .width(45)
+            .save();
+
+        _views.result.select_path_viewport()
+            .begin()
+                .widthFull()
             .save();
 
     };

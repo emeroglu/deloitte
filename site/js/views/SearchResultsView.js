@@ -237,4 +237,18 @@ $js.compile("SearchResultsView", View, function($public, $private, $protected, $
 
     };
 
+    $protected.extension.void.on_mobile_style = function(_views) {
+
+        _views.left.select_path_viewport()
+            .begin()
+                .widthFull()
+            .save();
+
+        _views.right.select_path_viewport()
+            .begin()
+                .none()
+            .save();
+
+    };
+
 });
