@@ -67,8 +67,9 @@ $js.compile("SearchResultsView", View, function($public, $private, $protected, $
         _views.left.views.query.views.text.set_align("left");
         _views.left.views.query.views.text.set_height("tall");
         _views.left.views.query.views.text.set_line_height("tall");
-        _views.left.views.query.views.text.set_size("small");
+        _views.left.views.query.views.text.set_size("smaller");
         _views.left.views.query.views.text.set_weight("bold");
+        _views.left.views.query.views.text.set_color("black");
 
         _views.left.views.categories.views.list
             .begin()
