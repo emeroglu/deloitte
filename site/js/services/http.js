@@ -16,6 +16,9 @@ $js.compile("$http", null, function($public, $private, $protected, $self) {
     $private.void.on_success = function(_text, _json, _response) {};
     $public.delegate.onSuccess = function($delegate) { $self.on_success = $delegate; return $self; };
 
+    $private.void.on_error = function( _response) {};
+    $public.delegate.onError = function($delegate) { $self.on_error = $delegate; return $self; };
+
     $public.void.send = function() {
 
         $self.request.set_method($self.method);
@@ -24,6 +27,11 @@ $js.compile("$http", null, function($public, $private, $protected, $self) {
         $self.request.onSuccess(function(_response) {
 
             $self.on_success(_response.text, _response.json, _response);
+
+        });
+        $self.request.onError(function(_response) {
+
+            $self.on_error(_response.text, _response.json, _response);
 
         });
         $self.request.send();

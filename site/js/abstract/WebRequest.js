@@ -11,10 +11,10 @@ $js.compile("WebRequest", null, function($public, $private, $protected, $self) {
     $private.field.data = "";
     $public.void.set_data = function(_data) { $self.data = _data; };
 
-    $private.void.on_success = function() { };
+    $private.void.on_success = function(_response) { };
     $public.delegate.onSuccess = function($delegate) { $self.on_success = $delegate; return $self; };
 
-    $private.void.on_error = function() { };
+    $private.void.on_error = function(_response) { };
     $public.delegate.onError = function($delegate) { $self.on_error = $delegate; return $self; };
 
     $public.void.send = function() {

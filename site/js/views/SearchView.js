@@ -142,6 +142,20 @@ $js.compile("SearchView", View, function($public, $private, $protected, $self) {
                         _views.result.views.result.set_results(results);
                         _views.result.views.result.apply();
 
+                    }, function(_text, _json, _response) {
+
+                        icon.select()
+                            .begin()
+                                .none()
+                            .commit();
+
+                        result.select()
+                            .begin()    
+                                .none()
+                            .commit();
+
+                        alert(_json.error);
+
                     });
 
                 }

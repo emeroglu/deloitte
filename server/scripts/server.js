@@ -61,6 +61,11 @@ $js.compile("$server", null, function($public, $private, $protected, $self) {
                         _response.write(_text);
                         _response.end();
 
+                    }, function() {
+
+                        _response.writeHead(500)
+                        _response.end();
+
                     });
 
                 });

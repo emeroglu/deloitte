@@ -3,7 +3,7 @@ $js.compile("$api", null, function($public, $private, $protected, $self) {
     $private.field.api_key = "cmjx4sdwxmt3uvkpcnsntjc5";
     $private.field.url = "http://api.walmartlabs.com/v1";
 
-    $public.void.search = function(_query, $success) {
+    $public.void.search = function(_query, $success, $fail) {
 
         let url = $self.url;
         url += "/search";
@@ -22,24 +22,32 @@ $js.compile("$api", null, function($public, $private, $protected, $self) {
             
             _response.on('end', () => {
 
-                let items = JSON.parse(data).items;
-                let products = [];
+                console.log(_response.statusCode);
 
-                for (let index in items) {
+                if (_response.statusCode == 200) {
 
-                    let item = items[index];
-        
-                    let product = {};
-                    product.id = item.itemId;
-                    product.name = item.name;
-                    product.image = item.mediumImage;
-                    product.categories = item.categoryPath.split("/");
+                    let items = JSON.parse(data).items;
+                    let products = [];
 
-                    products.push(product);
+                    for (let index in items) {
 
+                        let item = items[index];
+            
+                        let product = {};
+                        product.id = item.itemId;
+                        product.name = item.name;
+                        product.image = item.mediumImage;
+                        product.categories = item.categoryPath.split("/");
+
+                        products.push(product);
+
+                    }
+
+                    $success(JSON.stringify(products), products);
+
+                } else {
+                    $fail();
                 }
-
-                $success(JSON.stringify(products), products);
                 
             });
 
